@@ -8,48 +8,60 @@ from reportlab.lib import colors
 from io import BytesIO
 
 # ============================================================================
-# 1. 页面配置 (纯正工业蓝白主题 - Executive Navy & Pure White)
+# 1. 页面配置 (重回高冷工业蓝黑主题 - Professional Industrial Noir)
 # ============================================================================
 st.set_page_config(page_title="AIV Supply Chain Audit", page_icon="⚖️", layout="centered")
 
 st.markdown("""
 <style>
-    .stApp, [data-testid="stAppViewContainer"] { background-color: #f8f9fa !important; }
+    /* 全局深邃海军灰蓝背景 */
+    .stApp, [data-testid="stAppViewContainer"] { background-color: #1a1c23 !important; }
     [data-testid="stHeader"] { background-color: transparent !important; }
-    * { color: #2c3e50 !important; }
+    * { color: #e0e0e0 !important; }
     
-    h1, h2, h3, h4, h5 { color: #1e3a8a !important; font-weight: 800 !important; letter-spacing: 0.5px; }
-    .stRadio label, div[role="radiogroup"] label { color: #34495e !important; font-size: 16px !important; line-height: 1.6 !important; font-weight: 500 !important; }
+    /* 核心电光蓝标题 */
+    h1, h2, h3, h4, h5 { color: #00d4ff !important; font-weight: 800 !important; letter-spacing: 0.5px; }
     
+    /* 选项按钮：白色文字更清晰 */
+    .stRadio label, div[role="radiogroup"] label { color: #ffffff !important; font-size: 16px !important; line-height: 1.6 !important; font-weight: 500 !important; }
+    
+    /* 表单底色：比背景稍微浅一点的深灰色，带电光蓝左侧边框 */
     div[data-testid="stForm"] { 
-        background-color: #ffffff !important; 
-        border-left: 6px solid #1e3a8a !important; 
+        background-color: #252a33 !important; 
+        border-left: 5px solid #00d4ff !important; 
         padding: 2.5rem !important; 
-        border-radius: 12px !important; 
-        box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important;
-        border: 1px solid #e2e8f0 !important;
+        border-radius: 10px !important; 
+        border: 1px solid #444 !important;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
     }
     
-    /* 强制输入框字体为纯黑加粗，背景纯白 */
-    input {
+    /* 修复输入框：正常的淡色输入框，黑字加粗，保证绝对清晰 */
+    div[data-baseweb="input"] input {
+        background-color: #f8f9fa !important;
         color: #000000 !important;
-        background-color: #ffffff !important;
         font-weight: 900 !important;
         font-size: 16px !important;
-        border: 2px solid #1e3a8a !important;
+        border: 2px solid #00d4ff !important;
+    }
+    div[data-baseweb="input"] input:focus {
+        box-shadow: 0 0 8px rgba(0, 212, 255, 0.6) !important;
     }
     
-    .warning-banner { background: #fff3cd !important; border-left: 5px solid #ffc107 !important; border-radius: 8px !important; padding: 1.5rem !important; margin-bottom: 2rem !important; }
-    .highlight-red { color: #d93025 !important; font-weight: bold; }
-    .hook-box { background-color: #ffffff !important; border: 2px dashed #1e3a8a !important; border-radius: 8px !important; padding: 2rem !important; margin-top: 1rem !important; margin-bottom: 2rem !important; }
-    .result-box { background-color: #ffffff !important; border-left: 6px solid #1e3a8a !important; padding: 2rem !important; border-radius: 8px !important; margin-top: 2rem !important; margin-bottom: 2rem !important; box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important; }
-    .result-box h2 { color: #1e3a8a !important; font-size: 32px !important; margin-bottom: 10px !important;}
+    /* 警告横幅：深色渐变带电光蓝框 */
+    .warning-banner { background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(176, 176, 176, 0.05) 100%) !important; border-left: 5px solid #00d4ff !important; border-radius: 8px !important; padding: 1.5rem !important; margin-bottom: 2rem !important; }
+    .highlight-red { color: #ff4444 !important; font-weight: bold; }
     
-    /* 网页原生表格美化 */
-    table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px; font-size: 13.5px; background-color: #ffffff; }
-    th { background-color: #1e3a8a !important; color: #ffffff !important; padding: 12px; border: 1px solid #cbd5e1; text-align: left; }
-    td { padding: 12px; border: 1px solid #cbd5e1; color: #2c3e50 !important; }
-    .contact-note { color: #5f6368 !important; font-size: 14px !important; line-height: 1.6 !important; background-color: #f1f5f9 !important; padding: 15px !important; border-radius: 6px !important; border-left: 3px solid #94a3b8 !important; margin-bottom: 15px !important;}
+    /* 支付钩子与结果展示 */
+    .hook-box { background-color: #1a1c23 !important; border: 2px dashed #00d4ff !important; border-radius: 10px !important; padding: 2rem !important; margin-top: 1rem !important; margin-bottom: 2rem !important; }
+    .result-box { background-color: rgba(255, 0, 0, 0.1) !important; border-left: 6px solid #ff4444 !important; padding: 2rem !important; border-radius: 8px !important; margin-top: 2rem !important; margin-bottom: 2rem !important; }
+    .result-box h2 { color: #ff4444 !important; font-size: 32px !important; margin-bottom: 10px !important;}
+    
+    /* 网页端原生 Markdown 表格暗黑美化 */
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px; font-size: 14px; background-color: #252a33; }
+    th { background-color: #005580 !important; color: #ffffff !important; padding: 12px; border: 1px solid #444; text-align: left; }
+    td { padding: 12px; border: 1px solid #444; color: #e0e0e0 !important; }
+    
+    .contact-note { color: #b0b0b0 !important; font-size: 14px !important; line-height: 1.6 !important; background-color: #1a1c23 !important; padding: 15px !important; border-radius: 6px !important; border-left: 3px solid #b0b0b0 !important; margin-bottom: 15px !important;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -70,7 +82,7 @@ QUESTIONS = {
 }
 
 # ============================================================================
-# 3. 三大万字梯队报告文本 (极致严密、中英完全对标、绝不删减)
+# 3. 三大万字梯队报告文本 (一字未删，完美保留所有硬核内容与表格)
 # ============================================================================
 
 TIER_1_TEXT = """AIV Supply Chain Truth Report: Complete Analysis of China Generator Industry In-depth Rules & Ultimate Profit Risk Control Manual
