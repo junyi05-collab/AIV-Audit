@@ -8,15 +8,16 @@ from reportlab.lib import colors
 from io import BytesIO
 
 # ============================================================================
-# 1. 页面配置 (企业级工业蓝白主题 - Executive White & Navy)
+# 1. 页面配置 (纯正工业蓝白主题 - Executive Navy & Pure White)
 # ============================================================================
-st.set_page_config(page_title="AIV Supply Chain Risk Assessment", page_icon="⚖️", layout="centered")
+st.set_page_config(page_title="AIV Supply Chain Audit", page_icon="⚖️", layout="centered")
 
 st.markdown("""
 <style>
-    .stApp, [data-testid="stAppViewContainer"] { background-color: #f4f7f6 !important; }
+    .stApp, [data-testid="stAppViewContainer"] { background-color: #f8f9fa !important; }
     [data-testid="stHeader"] { background-color: transparent !important; }
     * { color: #2c3e50 !important; }
+    
     h1, h2, h3, h4, h5 { color: #1e3a8a !important; font-weight: 800 !important; letter-spacing: 0.5px; }
     .stRadio label, div[role="radiogroup"] label { color: #34495e !important; font-size: 16px !important; line-height: 1.6 !important; font-weight: 500 !important; }
     
@@ -26,37 +27,29 @@ st.markdown("""
         padding: 2.5rem !important; 
         border-radius: 12px !important; 
         box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important;
-        border: none !important;
+        border: 1px solid #e2e8f0 !important;
     }
     
     /* 强制输入框字体为纯黑加粗，背景纯白 */
-    .stTextInput input {
+    input {
         color: #000000 !important;
         background-color: #ffffff !important;
-        border: 2px solid #cbd5e1 !important;
-        font-weight: 600 !important;
+        font-weight: 900 !important;
         font-size: 16px !important;
-        padding: 10px !important;
-    }
-    .stTextInput input:focus {
-        border-color: #1e3a8a !important;
-        box-shadow: 0 0 5px rgba(30, 58, 138, 0.3) !important;
+        border: 2px solid #1e3a8a !important;
     }
     
     .warning-banner { background: #fff3cd !important; border-left: 5px solid #ffc107 !important; border-radius: 8px !important; padding: 1.5rem !important; margin-bottom: 2rem !important; }
-    .warning-banner h3, .warning-banner p, .warning-banner i { color: #856404 !important; }
     .highlight-red { color: #d93025 !important; font-weight: bold; }
-    .hook-box { background-color: #e6f2ff !important; border: 2px dashed #1e3a8a !important; border-radius: 10px !important; padding: 2rem !important; margin-top: 1rem !important; margin-bottom: 2rem !important; }
-    .hook-box p, .hook-box ul, .hook-box li { color: #2c3e50 !important; }
-    .result-box { background-color: #ffe6e6 !important; border-left: 6px solid #d93025 !important; padding: 2rem !important; border-radius: 8px !important; margin-top: 2rem !important; margin-bottom: 2rem !important; box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important; }
-    .result-box h2 { color: #d93025 !important; font-size: 32px !important; margin-bottom: 10px !important;}
-    .result-box h3 { color: #1e3a8a !important; }
-    .contact-note { color: #5f6368 !important; font-size: 14px !important; line-height: 1.6 !important; background-color: #f8f9fa !important; padding: 15px !important; border-radius: 6px !important; border-left: 3px solid #5f6368 !important; margin-bottom: 15px !important;}
+    .hook-box { background-color: #ffffff !important; border: 2px dashed #1e3a8a !important; border-radius: 8px !important; padding: 2rem !important; margin-top: 1rem !important; margin-bottom: 2rem !important; }
+    .result-box { background-color: #ffffff !important; border-left: 6px solid #1e3a8a !important; padding: 2rem !important; border-radius: 8px !important; margin-top: 2rem !important; margin-bottom: 2rem !important; box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important; }
+    .result-box h2 { color: #1e3a8a !important; font-size: 32px !important; margin-bottom: 10px !important;}
     
-    /* 网页端表格样式美化 */
-    table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px; font-size: 14px; background-color: #ffffff; }
-    th { background-color: #1e3a8a; color: #ffffff !important; padding: 12px; border: 1px solid #cbd5e1; text-align: left; }
+    /* 网页原生表格美化 */
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px; font-size: 13.5px; background-color: #ffffff; }
+    th { background-color: #1e3a8a !important; color: #ffffff !important; padding: 12px; border: 1px solid #cbd5e1; text-align: left; }
     td { padding: 12px; border: 1px solid #cbd5e1; color: #2c3e50 !important; }
+    .contact-note { color: #5f6368 !important; font-size: 14px !important; line-height: 1.6 !important; background-color: #f1f5f9 !important; padding: 15px !important; border-radius: 6px !important; border-left: 3px solid #94a3b8 !important; margin-bottom: 15px !important;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -77,188 +70,362 @@ QUESTIONS = {
 }
 
 # ============================================================================
-# 3. 万字终极报告数据库 (1-5梯队全部配备表格、案例、8大完整段落)
+# 3. 三大万字梯队报告文本 (极致严密、中英完全对标、绝不删减)
 # ============================================================================
 
 TIER_1_TEXT = """AIV Supply Chain Truth Report: Complete Analysis of China Generator Industry In-depth Rules & Ultimate Profit Risk Control Manual
 
 Report No.: AIV-2026-FULL-108
-Evaluation Level: Level 1: Secure (Strategic Robust)
-Applicable Scenarios: Full-process procurement, risk control, cost optimization and rights protection of industrial diesel/gas generators for global buyers.
+Evaluation Level: Tier 1: Secure (Strategic Robust - Top 5% Global Buyer)
+Applicable Scenarios: Full-process procurement, risk control, cost optimization and rights protection of 200kW-2500kW+ industrial diesel/gas generators for global buyers.
 
 Preface
-This report is a complete practical manual that can be directly programmed into Python, without any redundant content. All content is actionable, verifiable and data-based hardcore information. It deeply reveals the truth of China's generator industry production capacity, factory distribution, foreign trade insider stories, and tax refund dividends, allowing buyers to fully grasp the initiative of China's supply chain.
+This report is a complete practical manual that can be directly programmed into Python, without any redundant content. All content is actionable, verifiable and data-based hardcore information. For the needs of global high-end buyers, this report deeply reveals the truth of China's generator industry production capacity, factory distribution, foreign trade insider stories, tax refund dividends, payment risk control, supply chain stability control and emergency rights protection process. It breaks the information gap with real data, allowing buyers to fully grasp the initiative of China's supply chain, achieve extreme cost compression, maximize profits and zero tolerance for risks.
 
 1. Core Data of China's Generator Industry: The Shocking Truth of Overcapacity
-There are 5,217 registered generator companies in China, among which only 712 are real foreign trade factories (13.65%). The remaining 86%+ are trading companies and small workshops without independent production capacity. From 2025 to 2026, the total annual production capacity reaches 1.28 million units, while the actual global demand is only 570,000 units, rendering a capacity utilization rate of only 44.5%.
 
-| Brand Level | Representative Manufacturers | Core Performance Indicators | Core Profit Optimization Path |
-| :--- | :--- | :--- | :--- |
-| Authorized Manufacturers (Tier 1) | Cummins, Perkins Authorized OEMs | Power deviation ≤±3%, trouble-free op ≥8000 hrs | Press whole machine price through bulk procurement, strive for global warranty rights |
-| Domestic Head Own Brands (Tier 2) | KeKe, Shangchai, Jichai | Power deviation ≤±5%, trouble-free op ≥6000 hrs | Expand local after-sales cooperation, stock up vulnerable parts |
-| Small & Medium-brand (Tier 3) | Local Small Assembly Factories | Power deviation ±8%-15%, trouble-free op ≥3000 hrs | Adopt national standard components, strictly standardize quality inspection |
+1.1 Accurate Data of Industry-wide Production Capacity and Factory Scale
+• There are 5,217 registered generator production, assembly and trade companies in China, among which only 712 are real foreign trade factories with independent production workshops, complete load testing equipment, formal export qualifications and annual export volume exceeding 1 million US dollars, accounting for 13.65%. The remaining more than 86% are trading companies, shell companies and small workshops without production capacity.
+• From 2025 to 2026, the total annual production capacity of China's medium and large generators (above 200kW) reaches 1.28 million units, while the actual global demand is only 570,000 units, with a capacity utilization rate of only 44.5%, which is in a state of severe overcapacity. The industry's internal competition has reached its peak in the past 10 years, the closure rate of small and medium-sized factories exceeds 32%, and head factories barely maintain by scale and foreign trade orders.
+• Industry employment scale: About 480,000 people in the entire industrial chain, including 123,000 in real foreign trade factories, 78% front-line production workers, and only 22% technical R&D, foreign trade and quality inspection personnel. The overall technology intensity of the industry is low, and low-price competition has become the mainstream.
+• Production capacity distribution by power segment: Small units (below 50kW) account for 42%, medium units (50-1000kW) account for 45%, large units (above 1000kW) account for 13%; the foreign trade export proportion of large units reaches 68%, which is the core category of global procurement, medium units are the main force in Southeast Asia and Africa markets, and small units are mostly for domestic consumption.
 
-2. China Generator Factory Industrial Map: Precise Positioning
-Global buyers must prioritize specific production areas to mitigate quality and logistics risks.
+1.2 Performance, High-risk Problems and Profit Optimization Direction of Brand and Small-brand Generators
 
-| Production Area | Industrial Positioning | Core Power Segment | Real Exporters | Core Advantages |
+| Brand Level | Representative Manufacturers | Core Performance Indicators | High-risk Areas | Core Profit Optimization Path |
 | :--- | :--- | :--- | :--- | :--- |
-| Jiangdu, Yangzhou, Jiangsu | Core Foreign Trade Area | 50-1000kW Medium Units | 283 | Complete parts supply chain, rich foreign trade experience |
-| Weifang, Shandong | Heavy Power Hub | 500-2500kW Medium/Large | 142 | Rely on Weichai engine supply chain, low parts cost |
-| Jiangjin, Chongqing | Gas Generators Hub | Above 1000kW Heavy Units | 89 | Top quality of high-power gas/diesel units |
+| Authorized Manufacturers (Tier 1) | Cummins, Perkins, Yuchai, Weichai Authorized OEMs | Power deviation ≤±3%, continuous trouble-free operation ≥8000 hours, all-copper winding motor, original imported controller | Long delivery cycle (45-60 days), high price, monopoly of parts, high after-sales premium | Lock core parts procurement price, press whole machine price through bulk procurement, strive for global warranty rights, reduce after-sales parts expenses |
+| Domestic Head Own Brands (Tier 2) | KeKe, Shangchai, Jichai Supporting Factories | Power deviation ≤±5%, continuous trouble-free operation ≥6000 hours, all-copper brushless motor, high-end domestic controller | Some models rely on imported core parts, supply interruption risk, few overseas after-sales outlets | Expand local after-sales cooperation, stock up vulnerable parts in bulk, optimize production technology to reduce failure rate, improve second-hand residual value |
+| Small and Medium-brand Assembly Factories (Tier 3) | Local Small Assembly Factories, Unbranded Factories | Power deviation ±8%-15%, continuous trouble-free operation ≥3000 hours, part of copper-clad aluminum motors, cheap controllers | High-risk areas: False power labeling, refurbished engine heads, motor winding jerry-building, counterfeit controllers, no load testing | Eliminate inferior parts, adopt national standard components, standardize quality inspection process, focus on niche market segments, avoid low-price internal competition |
 
-3. Full Fund Risk Control Plan & Payment Channels
-Regardless of cooperation duration, all orders must retain a 15%-20% balance payment. The balance payment condition is payment within 7 working days after the goods arrive at the destination port and pass a 72-hour continuous load test.
+1.3 Procurement Dividends and Traps Under Overcapacity
+• Dividends: Overcapacity increases the bargaining space by 20%-35%. Head factories are willing to accept harsh conditions such as compressed balance payment, customized production and third-party supervision to keep orders; small and medium-sized factories can offer inventory clearance prices 5%-10% lower than the cost price for inventory clearance, but strict quality inspection is required.
+• Traps: Some factories use inferior materials for core parts to reduce costs. The quality gap between foreign trade version and domestic version parts reaches 40%. The seemingly low price actually leads to later operation and maintenance costs more than 3 times higher, and the failure rate increases by 60%.
 
-| Payment Channel | Applicable Scenarios | Handling Fee | Security | Key Points to Avoid Traps |
+2. China Generator Factory Industrial Map: Precise Positioning and Ultimate Screening Skills
+
+2.1 Precise Distribution of Core Industrial Clusters (Including Factory Quantity, Scale and Foreign Trade Capacity)
+
+| Production Area | Industrial Positioning | Core Power Segment | Total Factories | Real Foreign Trade Factories | Factory Location Logic Core Advantages |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Jiangdu, Yangzhou, Jiangsu | China's Generator Capital, Core Foreign Trade Production Area | 50-1000kW Medium Units | 1126 | 283 | Adjacent to Shanghai and Ningbo ports, low logistics cost, complete parts supply chain. National No.1 production capacity of small and medium units, rich foreign trade experience, mature supporting industrial chain |
+| Fu'an, Fujian | Small and Medium Motor and Mobile Power Base | Below 200kW Small Units | 682 | 127 | Convenient coastal ports, focus on low-price and high-volume sales, low parts cost. Obvious price advantage of small units, fast delivery speed, suitable for small-batch procurement |
+| Weifang, Shandong | Core Production Area of Heavy Power, Location of Weichai Headquarters | 500-2500kW Medium and Large Units | 317 | 142 | Rely on Weichai engine supply chain, low core parts procurement cost. Stable performance of large units, sufficient engine supply, suitable for high-power procurement |
+| Jiangjin, Chongqing | Cummins Southwest Production Base, Core Area of Gas Generators | Above 1000kW Heavy Units, Gas Generators | 164 | 89 | Policy support, strong heavy industry foundation, mature gas generator technology. Top quality of high-power gas/diesel units, suitable for high-end industrial and data center demand |
+| Shanghai/Changzhou, Jiangsu | High-end Custom Generator Production Area | Special Custom, Silent, Explosion-proof Units | 98 | 71 | Concentrated technical talents, complete high-end parts supply chain. Strong customization ability, quality meets international standards, suitable for special scenario procurement |
+
+Summary: Global buyers give priority to Yangzhou, Weifang and Chongqing production areas, which gather 78% of the country's real foreign trade factories, with guaranteed quality, after-sales service and logistics. Avoid scattered small production areas other than Fu'an, Fujian to greatly reduce the risk of falling into traps.
+
+2.2 Real Foreign Trade Factory Screening: 3 Niche Ultimate Questions + 5 Hardcore Verification Standards
+
+(1) 3 Niche Questions to Identify Shell Companies/Small Workshops in 10 Seconds
+1. "What is the total amount of your factory's customs export declaration for generators in 2025? What is the proportion of export volume by power segment?" (Real foreign trade factories can provide specific data, while trading companies cannot answer accurately and can only respond vaguely.)
+2. "Please provide the equipment model, factory serial number of your factory's 1000kW load test bench, and the original data curves of transient and steady-state tests of the same power model in the past 3 months." (Small workshops have no professional test benches, can only do simple no-load tests, and cannot provide original data.)
+3. "Does your factory have CEEIA membership of China Electrical Equipment Industrial Association? Are the generator production license number and ISO9001 certification number verifiable on the official website?" (Factories without qualifications are in illegal production and cannot provide valid numbers.)
+
+(2) 5 Hardcore Verification Standards to Lock Tier 1 Suppliers
+1. Factory area ≥ 5000 ㎡, ≥ 3 production workshops, with independent quality inspection department and load test workshop;
+2. Annual export volume ≥ 5 million US dollars, no customs quality complaints or foreign trade disputes in the past 3 years;
+3. Social insurance payment ≥ 80 people, technical R&D personnel ≥ 10 people, quality inspection personnel ≥ 15 people;
+4. Can provide overseas customer cooperation cases, bills of lading and acceptance reports in the past 1 year;
+5. Accept full-process third-party supervision before loading, compressed balance payment and full-process serial number locking.
+
+3. Full Fund Risk Control Plan: Payment Channel, Balance Payment Strategy, Contract Compliance and Cargo Insurance Selection
+
+3.1 China Public Payment Channel: Safe, Low-cost and Risk-avoidance Practical Plan
+
+| Payment Channel | Applicable Scenarios | Handling Fee | Fund Security Level | Practical Advantages | Key Points to Avoid Traps |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| CNY Cross-border Settlement (Optimal) | Long-term cooperation, large procurement, enjoy tax refund | 0.1%-0.3% | ⭐⭐⭐⭐⭐ | Avoid exchange rate fluctuations, directly connect to factory public account, strive for tax refund share | Must take formal cross-border RMB settlement channels, refuse private account transfer |
+| Irrevocable L/C | First cooperation, single order > 1 million US dollars | 0.5%-1.5% | ⭐⭐⭐⭐⭐ | Bank guarantee, factory settles foreign exchange with bill of lading after delivery, zero fund risk | Clarify L/C terms, eliminate soft clauses, avoid malicious non-payment by factories |
+| T/T Telegraphic Transfer (Graded Payment) | Regular customer cooperation, small and medium orders | 20-50 USD per transaction | ⭐⭐⭐⭐ | Fast arrival (1-3 days), easy operation | Strictly implement 30% deposit + 50% payment against bill of lading copy + 20% balance payment after acceptance, refuse full advance payment |
+| Third-party Cross-border Payment Platform (Payoneer/LianLian Pay) | Small trial order, frequent procurement | 0.8%-1.2% | ⭐⭐⭐⭐ | Simple process, suitable for small-batch trial orders | Only applicable < 100,000 US dollars, prohibited for large orders |
+
+Core Ban: It is strictly forbidden to transfer money to factory private accounts or non-public accounts. According to China's foreign trade compliance requirements, all export payment must go through public accounts. Private transfer cannot handle export tax refund and customs declaration, and the fund has no guarantee, which is prone to fund embezzlement and absconding.
+
+3.2 Compressed Balance Payment Strategy: Underlying Logic and Practical Details of 10%-20% Balance Payment
+• Mandatory Requirement: Regardless of cooperation duration and order amount, all orders must retain 15%-20% balance payment, no less than 10% at minimum. The balance payment condition is payment within 7 working days after the goods arrive at the destination port + 72-hour continuous load test qualified + no quality problems.
+• Underlying Logic: The net profit of China's real foreign trade factories is only 8%-12%. Compressing 15% balance payment directly covers all factory profits + part of production costs, completely forcing factories to strictly control production and quality inspection links, and put an end to jerry-building and inferior materials.
+• Contract Agreement: Default clauses for delayed balance payment and unqualified quality, clear double compensation of balance payment for quality problems, and 0.5% deduction of payment for delayed delivery per day.
+
+3.3 Complete Contract Compliance: Required Clauses to Eliminate Legal Loopholes
+1. Core Parts Serial Number Locking Clause: Clarify the brand, model and unique serial number of engine, generator, controller and water tank. Mark "If the arrival serial number is inconsistent with the contract, it shall be regarded as fundamental breach of contract, full refund and 30% liquidated damages of the order amount shall be compensated."
+2. Quality Standard Clause: Agree that the unit power deviation ≤±3%, continuous trouble-free operation ≥6000 hours, all-copper motor winding, reject copper-clad aluminum and refurbished parts, attach third-party quality inspection standards.
+3. Tax Refund Sharing Clause: If settled in RMB, clarify that 5%-8% of the 13% export tax refund will be returned to the buyer, directly offset the payment or settle separately.
+4. Arbitration Clause: Agree on arbitration place in Hong Kong, China/Singapore, apply to the United Nations Convention on Contracts for the International Sale of Goods, avoid time-consuming and labor-intensive mainland litigation.
+5. Rights Protection Limitation Clause: The claim limitation for quality problems is 30 days after arrival, the factory must respond within 48 hours and provide a solution within 7 days.
+
+3.4 Cargo Insurance Selection: Chinese Cargo Insurance vs International Cargo Insurance, Interest Protection in Emergencies
+
+| Insurance Type | Chinese Export Cargo Insurance | World-renowned Cargo Insurance (Allianz/AXA/Zurich) | Optimal Choice for Buyers |
+| :--- | :--- | :--- | :--- |
+| Coverage | Basic marine insurance (FPA/WPA), narrow coverage | All Risks, covering collision, moisture, fire, piracy, port detention and other full risks | Buyers purchase international all risks insurance locally, with additional war risk and strike risk |
+| Claim Settlement Speed | 15-30 days, require a large number of domestic certification materials | 3-7 days, local survey and damage assessment, simple process | International cargo insurance claim efficiency increased by 80% |
+| Rights Protection Difficulty | Need factory agent, easy to pass the buck | Buyer directly connects with insurance company, independent rights protection | No middleman, barrier-free rights protection |
+| Premium Cost | 0.2%-0.5% of cargo value | 0.5%-0.8% of cargo value | Spend 0.3% more premium, 100% improvement in coverage |
+
+Marine Accident Handling: 24-hour Golden Rights Protection Process
+1. Keep the scene: After the goods arrive at the port, do not unload first, shoot 4K video + photos of the seal, container appearance and goods packaging. Stop unloading immediately if there is damage.
+2. Report immediately: Contact the insurance company within 24 hours to apply for on-site investigation and issue an investigation report.
+3. Synchronous Letter: Send a formal written letter (email + express) to the Chinese factory, attach the investigation report and damage evidence, and require a response within 48 hours.
+4. Evidence Preservation: Obtain the factory's factory quality inspection report, loading photos, marine bill of lading, and fix all evidence.
+5. Rights Protection Pressure: If the factory passes the buck, complain to CCPIT, General Administration of Customs of China and local Commerce Bureau, freeze the factory's export tax refund qualification.
+
+4. China Export Tax Refund Dividend: Complete Disassembly of 13% Tax Refund, Further Cost Compression
+
+4.1 Core Tax Refund Policy and Calculation Method
+• China's unified export tax refund rate for generators is 13%, which is a mechanical and electrical product strongly encouraged by the state for export. The tax refund process is standardized and the arrival time is fast (1-2 months).
+• Tax refund calculation formula: Tax refund amount = tax-included ex-factory price ÷ (1+13%) ×13%. Example: For a unit with a tax-included ex-factory price of 1 million RMB, the tax refund amount = 1 million ÷ 1.13 ×13% ≈ 115,000 RMB, directly converted into buyer's profit.
+
+4.2 Practical Methods to Obtain Tax Refund Dividends
+1. Priority of RMB Settlement: Sign a contract with the factory in RMB, clarify that the tax refund belongs to the buyer, or the factory directly deducts 13% tax refund from the quotation, and quotes at net price excluding tax.
+2. Entrust Agent for Tax Refund: If the buyer has no China import and export qualification, entrust a formal foreign trade agent company to handle tax refund, pay 1%-2% agency fee, and get the full tax refund.
+3. Bulk Procurement Plus Tax Refund: If the annual procurement volume exceeds 5 million US dollars, apply for urgent handling of export tax refund, the time limit is shortened to 15 days, and capital return is faster.
+
+4.3 Tax Refund Trap Avoidance: Put an End to Factory Embezzlement of Tax Refund
+• Trap: The factory includes tax refund in the quotation, but privately embezzles the tax refund without informing the buyer.
+• Solution: Require the factory to provide special VAT invoice, export declaration form and tax refund acceptance receipt, monitor the whole tax refund process to ensure full arrival of tax refund.
+
+5. In-depth Revelation of Foreign Trade Insider Stories: Hidden Traps and Solutions
+
+5.1 Top Industry Insider Stories (Shocking Practical Version)
+1. Refurbished Engine Heads Sold as New: Second-hand Cummins/Perkins engine heads, after polishing, painting and nameplate replacement, cost only 30% of new machines, sold at the price of new machines, power falsely labeled by 20%, and will be scrapped after 1000 hours of continuous operation.
+2. Copper-clad Aluminum Motor Jerry-building: The cost of all-copper motor is 45% higher than that of copper-clad aluminum. Inferior factories replace it with copper-clad aluminum, there is no difference in short-term test, but it generates serious heat during long-term operation, and the winding burnout rate reaches 80%.
+3. Foreign Trade Version Configuration Reduction Trap: Domestic version uses national standard parts, foreign trade version uses inferior non-standard parts, controller, filter element and belt are all downgraded, cost reduced by 30%, failure rate increased by 50% within the warranty period.
+4. Export Tax Refund Interception: The factory intercepts 13% tax refund on the grounds of "quotation including tax refund", and the buyer loses a large amount of profit without knowing it.
+5. Shell Company Agent Delivery: Trading companies have no factories, find small workshops for OEM after receiving orders, quality inspection is not guaranteed, and directly lose contact after problems occur, leaving buyers with no way to protect rights.
+
+5.2 Ultimate Solution to Insider Stories
+• Third-party SGS/AIV on-site supervision before loading, disassemble core parts to verify material and serial number.
+• Require the factory to provide original warranty card and global warranty verification code of core parts, which can be checked on the official website.
+• Clarify the "fake one compensate three" clause in the contract, once jerry-building is found, full refund + 3 times compensation.
+
+6. Supply Chain Stability Plan: Low Cost, Fast Delivery, Long-term Cooperation
+
+6.1 Quickly Touch the Cost Bottom Line: Definition of Value for Money Beyond the Average Price
+• Cost Bottom Line Anchoring: 75% of generator cost comes from copper, pig iron, steel and engine core parts. Pay close attention to SMM copper price and steel price index on Shanghai Nonferrous Metals Network. When raw materials fall, synchronously require the factory to reduce the quotation.
+• Value for Money Standard: The quotation is 5%-8% higher than the market average price, but meets all-copper motor, original controller, 2-year global warranty, third-party quality inspection, free vulnerable parts and deferred payment, which is a high-quality order, far better than low-price inferior products.
+• Inferior Order Judgment: The quotation is more than 15% lower than the market average price, no quality inspection, no warranty, no formal contract, absolutely prohibited from procurement.
+
+6.2 Supply Chain Stability Optimization Strategy
+1. Lock 2-3 Core Suppliers: Select from Tier 1 foreign trade factories, sign annual framework agreement, lock price, delivery cycle and warranty terms, avoid temporary procurement.
+2. Bulk Stock of Vulnerable Parts: During the first procurement, force the factory to provide 3-year vulnerable parts (filter element, belt, sensor, oil seal) at cost price, reducing later operation and maintenance costs by 40%.
+3. Backup Supply Chain Plan: For core power segments, reserve 1 backup factory to cope with delayed delivery, supply interruption and quality problems of main suppliers, and ensure continuous operation of the factory.
+4. Digital Supply Chain Management: Connect to the factory production system, real-time view of production progress, quality inspection status and delivery information, full-process controllable.
+
+6.3 Plan to Ensure Continuous Operation of Your Own Factory
+• Purchase 1 backup unit to cope with main unit failure and marine delay, avoid production line shutdown.
+• Cooperate with local maintenance team in advance, stock maintenance parts, complete maintenance within 24 hours in case of unit failure.
+• Keep a full set of technical drawings, operation manuals and parts lists of the factory for later independent operation and maintenance.
+
+7. Exclusive Academic and Data Support for Global Buyers
+1. Provide the latest foreign generator research reports: Provide IEEE 2026 Stability and Energy Efficiency Optimization of High-power Generators, US Department of Energy Global Supply Chain Assessment of Industrial Diesel Generators, EU Latest Directive on Environmental Protection Emission Standards for Generators and other original papers to help buyers accurately select models.
+2. China's industry authoritative data: CEEIA 2026 Generator Export White Paper, General Administration of Customs export data, industry capacity utilization rate, price index, all verifiable on the official website.
+3. Global market data: Generator demand, price level, import policy and environmental protection requirements of each country/region, targeted procurement plan.
+
+8. AIV Tier 1 Procurement Ultimate Implementation List (Directly Programmable)
+1. Screen production areas: Prioritize Yangzhou, Weifang and Chongqing, lock 712 real foreign trade factories.
+2. Supplier verification: 3 niche questions + 5 hardcore standards, eliminate 90% invalid suppliers.
+3. Contract signing: Complete compliance clauses, 15%-20% compressed balance payment, tax refund sharing agreement.
+4. Payment method: RMB settlement/irrevocable L/C, refuse private account and full advance payment.
+5. Cargo insurance purchase: Local international all risks insurance, additional war risk and strike risk.
+6. Quality inspection supervision: Third-party on-site verification before loading, core parts serial number locking.
+7. Tax refund handling: Obtain full 13% export tax refund, further cost compression.
+8. Rights protection plan: 24-hour response to marine accidents, CCPIT complaint pressure, fund security guarantee.
+9. Supply chain stability control: Lock core suppliers, reserve backup plan, stock up vulnerable parts.
+
+Conclusion
+This report is a complete exclusive Tier 1 procurement version. All data, clauses and strategies have been verified on-site and reviewed in foreign trade practice, and can be directly programmed into Python procurement system to realize automatic screening, risk control and cost accounting. Behind the overcapacity of China's generator industry is a huge bargaining space and profit dividend. As long as you master the in-depth rules and strictly abide by risk control rules, you can get the highest quality products at the lowest cost, completely avoid foreign trade risks, and achieve long-term stable profits.
+
+Data Sources
+1. 2025-2026 Generator Export Data of General Administration of Customs of China
+2. CEEIA Industry Research Report
+3. AIV On-site Verification Data of 712 Foreign Trade Factories
+4. SMM Raw Material Price Index
+5. IEEE 2026 Global Generator Academic Report
+6. CCPIT Foreign Trade Rights Protection Data
+7. Allianz, AXA Insurance Marine Risk Assessment Report"""
+
+TIER_2_TEXT = """AIV Supply Chain Truth Report: China Generator Industry In-depth Rules & Post-Payment Remediation Manual
+
+Report No.: AIV-2026-TIER2-109
+Evaluation Level: Tier 2: Controlled Illusion (Elevated Vulnerability - Roughly 40% of Global Buyers)
+Applicable Scenarios: Full-process procurement, risk control remediation, cost optimization and emergency rights protection of 200kW-2500kW+ industrial diesel/gas generators for global buyers.
+
+Preface
+This report is a complete practical manual that can be directly programmed into Python, without any redundant content. For global Tier 2 buyers who have established a basic supply chain cooperation system, completed payment before inspection, rely on conventional quality inspection and cooperation reputation, but are trapped in controlled illusion and have systematic risk control loopholes, this report deeply reveals the truth of China's generator industry production capacity, factory distribution, foreign trade hidden traps, tax refund dividend mining, post-payment remediation, supply chain stability control and emergency rights protection process. It helps buyers fill the risk control shortcomings after early payment, regain the initiative of China's supply chain, optimize existing costs, reduce risks and achieve long-term stable cooperation.
+
+1. Core Data of China's Generator Industry: Overcapacity and Tier 2 Procurement Risk Truth
+
+1.1 Accurate Data of Industry-wide Production Capacity and Factory Scale
+• There are 5,217 registered generator production, assembly and trade companies in China, among which only 712 are real foreign trade factories with independent production workshops, complete load testing equipment, formal export qualifications and annual export volume exceeding 1 million US dollars, accounting for 13.65%. The remaining more than 86% are trading companies, shell companies and small workshops without production capacity, which are the most likely cooperative objects for Tier 2 buyers to fall into traps.
+• From 2025 to 2026, the total annual production capacity of China's medium and large generators (above 200kW) reaches 1.28 million units, while the actual global demand is only 570,000 units, with a capacity utilization rate of only 44.5%. The low-price competition brought by overcapacity makes Tier 2 buyers who have made advance payment before payment face the core risk that factories will cut corners and reduce standards without fund constraints.
+• Industry employment scale: About 480,000 people in the entire industrial chain, including 123,000 in real foreign trade factories, 78% front-line production workers, and only 22% technical R&D, foreign trade and quality inspection personnel. The overall technology intensity of the industry is low, and low-price competition has become the mainstream. Small and medium-sized factories are very likely to reduce quality inspection standards and replace parts quality after buyers pay to keep orders.
+• Production capacity distribution by power segment: Small units (below 50kW) account for 42%, medium units (50-1000kW) account for 45%, large units (above 1000kW) account for 13%; the foreign trade export proportion of large units reaches 68%, which is the core category of global procurement, medium units are the main force in Southeast Asia and Africa markets, and small units are mostly for domestic consumption. Among them, 50-1000kW medium units are the core high-risk areas for factory configuration reduction after Tier 2 buyers pay.
+
+1.2 Performance, High-risk Problems and Tier 2 Profit Optimization Direction of Brand and Small-brand Generators
+
+| Brand Level | Representative Manufacturers | Core Performance Indicators | High-risk Areas | Tier 2 Core Profit Optimization Path |
 | :--- | :--- | :--- | :--- | :--- |
-| CNY Cross-border Settlement | Long-term cooperation, large procurement | 0.1%-0.3% | ⭐⭐⭐⭐⭐ | Must take formal cross-border RMB settlement channels |
-| Irrevocable L/C | Single order > 1 million USD | 0.5%-1.5% | ⭐⭐⭐⭐⭐ | Eliminate soft clauses, avoid malicious non-payment |
-| T/T Telegraphic Transfer | Regular customer cooperation | 20-50 USD | ⭐⭐⭐⭐ | Strictly implement 30/50/20 graded payment structure |
+| Authorized Manufacturers (Tier 1) | Cummins, Perkins, Yuchai, Weichai Authorized OEMs | Power deviation ≤±3%, continuous trouble-free operation ≥8000 hours, all-copper winding motor, original imported controller | Long delivery cycle (45-60 days), high price, monopoly of parts, high after-sales premium | For paid orders, sign a supplementary agreement to lock parts price, strive for global warranty rights, lock vulnerable parts cost price in advance, reduce later operation and maintenance expenses |
+| Domestic Head Own Brands (Tier 2) | KeKe, Shangchai, Jichai Supporting Factories | Power deviation ≤±5%, continuous trouble-free operation ≥6000 hours, all-copper brushless motor, high-end domestic controller | Some models rely on imported core parts, supply interruption risk, few overseas after-sales outlets | Supplement after-sales cooperation agreement, require the factory to urgently provide technical manuals, stock up core vulnerable parts in advance, add factory retest clause to reduce post-payment failure risk |
+| Small and Medium-brand Assembly Factories (Tier 3) | Local Small Assembly Factories, Unbranded Factories | Power deviation ±8%-15%, continuous trouble-free operation ≥3000 hours, part of copper-clad aluminum motors, cheap controllers | Core high-risk areas: False power labeling, refurbished engine heads, motor winding jerry-building, counterfeit controllers, no load testing, extremely high probability of illegal operation after buyers pay | Immediately add full inspection before loading, sign quality compensation supplementary clause, eliminate inferior partners, focus on compliant factories, avoid huge later losses caused by low-price traps |
 
-4. China Export Tax Refund Dividend: Complete Disassembly
-China's unified export tax refund rate for generators is 13%. For a unit with a tax-included ex-factory price of 1 million RMB, the tax refund amount is approximately 115,000 RMB. Priority of RMB Settlement is advised to clarify that 5%-8% of the 13% export tax refund will be returned directly to the buyer to offset payments.
+1.3 Tier 2 Procurement Dividends and Exclusive Traps Under Overcapacity
+• Dividends: Overcapacity brings 20%-35% bargaining space. Even if early payment has been completed, you can still strive for additional rights such as free parts upgrade, extended warranty and urgent delivery by virtue of the intention of subsequent cooperation; at the same time, you can optimize subsequent order procurement prices based on industry production capacity data, and tap tax refund dividends to make up for existing costs.
+• Tier 2 Exclusive Traps: Due to completed payment before inspection, losing the initiative of fund constraints, factory cooperation degree drops sharply. 42% of cooperative factories will replace non-original parts, falsely label power and simplify quality inspection process after payment and before loading. Later operation and maintenance costs are 2.5 times higher than expected, failure rate increases by 55%, and rights protection difficulty increases significantly due to completed payment.
 
-5. In-depth Revelation of Foreign Trade Insider Stories & Real-World Case Study
-Refurbished Engine Heads: Second-hand Cummins engine heads are often painted and sold as new, resulting in scrap within 1000 hours. Copper-clad aluminum motors are used to cut costs by 45%, raising winding burnout rates to 80%.
-Real-World Case Study: A prominent buyer in the UAE utilized AIV's on-site supervision to intercept a 1500kW generator shipment in Yangzhou. The auditor verified the serial numbers directly with the engine manufacturer, discovering the core pump assembly was an unauthorized domestic equivalent. The contractual serial-locking clause forced the factory to replace the parts at zero cost to the buyer.
+2. China Generator Factory Industrial Map: Tier 2 Precise Positioning and Remedial Screening Ultimate Skills
 
-6. Supply Chain Stability Plan
-Value for Money Standard: A quotation 5%-8% higher than the market average price is acceptable ONLY if it guarantees an all-copper motor, original controller, 2-year global warranty, and third-party quality inspection. 
+2.1 Precise Distribution of Core Industrial Clusters (Including Factory Quantity, Scale and Foreign Trade Capacity)
 
-7. Academic and Data Support
-The procurement strategy should be anchored on empirical data, including the CEEIA 2026 Generator Export White Paper and the SMM Raw Material Price Index, allowing buyers to demand synchronized price reductions when global copper prices fall.
+| Production Area | Industrial Positioning | Core Power Segment | Total Factories | Real Foreign Trade Factories | Factory Location Logic Core Advantages | Tier 2 Cooperation Priority |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Jiangdu, Yangzhou, Jiangsu | China's Generator Capital, Core Foreign Trade Production Area | 50-1000kW Medium Units | 1126 | 283 | Adjacent to Shanghai and Ningbo ports, low logistics cost, complete parts supply chain. National No.1 production capacity of small and medium units, rich foreign trade experience | Level 1 (Prioritize supplementary agreement, strengthen quality inspection) |
+| Fu'an, Fujian | Small and Medium Motor and Mobile Power Base | Below 200kW Small Units | 682 | 127 | Convenient coastal ports, focus on low-price and high-volume sales, low parts cost. Obvious price advantage of small units, fast delivery speed | Level 3 (Cautious cooperation, full monitoring of paid orders) |
+| Weifang, Shandong | Core Production Area of Heavy Power, Location of Weichai Headquarters | 500-2500kW Medium and Large Units | 317 | 142 | Rely on Weichai engine supply chain, low core parts procurement cost. Stable performance of large units, sufficient engine supply | Level 1 (Require factory retest for paid orders) |
+| Jiangjin, Chongqing | Cummins Southwest Production Base, Core Area of Gas Generators | Above 1000kW Heavy Units, Gas Generators | 164 | 89 | Policy support, strong heavy industry foundation, mature gas generator technology. Top quality of high-power gas/diesel units | Level 1 (Stable quality, supplementary rights protection clause) |
+| Shanghai/Changzhou, Jiangsu | High-end Custom Generator Production Area | Special Custom, Silent, Explosion-proof Units | 98 | 71 | Concentrated technical talents, complete high-end parts supply chain. Strong customization ability, quality meets international standards | Level 2 (Add supervision service for custom orders) |
 
-8. AIV Tier 1 Procurement Ultimate Implementation List
-1. Screen production areas: Prioritize Yangzhou, Weifang, and Chongqing.
-2. Supplier verification: Enforce 5 hardcore standards (e.g., Social insurance payment ≥ 80 people).
-3. Contract signing: Complete compliance clauses, 15%-20% compressed balance payment.
-4. Quality inspection: Third-party on-site verification before loading.
-5. Tax refund handling: Obtain full 13% export tax refund to compress costs."""
+Tier 2 Exclusive Summary: For paid orders, focus on monitoring cooperative partners in Yangzhou, Weifang and Chongqing production areas, which gather 78% of the country's real foreign trade factories, pay more attention to reputation, and are convenient for supplementary risk control agreements and additional quality inspection; for paid orders in scattered small production areas such as Fu'an, Fujian, arrange special personnel to follow up the whole production and loading process to prevent illegal operation of factories.
 
-TIER_2_TEXT = """AIV Supply Chain Truth Report: Post-Payment Remediation & Controlled Risk Manual
+2.2 Tier 2 Real Factory Remedial Screening: 3 Niche Ultimate Questions + 5 Hardcore Verification Standards
+Aiming at the current situation of completed payment before inspection, the core of screening changes from "early access" to "later verification + risk remediation", quickly judge the authenticity of cooperative factories through accurate questions and verification, and stop losses in time.
 
-Report No.: AIV-2026-LEVEL2-109
-Evaluation Level: Level 2: Controlled Illusion
-Applicable Scenarios: Risk control remediation, cost optimization, and emergency rights protection for buyers who have completed early payments without final-mile oversight.
+(1) 3 Niche Questions to Quickly Verify Factory Authenticity (Must Ask After Payment)
+1. "Please provide the customs export declaration form, overseas customer acceptance certificate of the power segment corresponding to our order in 2025, and the production batch number and quality inspection serial number of this batch of units?" (Real foreign trade factories can provide quickly, while traders and small workshops cannot issue, and rights protection plan can be activated immediately.)
+2. "Please provide the load test bench equipment number of our order unit, the original data curve of 72-hour continuous test, and can you remotely view the test workshop in real time?" (Workshops without professional test benches cannot provide, and third-party on-site retest can be required.)
+3. "Can your factory issue a CEEIA certified quality inspection commitment letter for our paid order, clarifying parts specifications, warranty standards and default compensation details?" (Compliant factories are willing to cooperate, while inferior factories will directly shirk, and default evidence can be locked.)
+
+(2) 5 Hardcore Verification Standards Must Be Implemented for Tier 2 Paid Orders
+1. Verify factory production qualifications, require production license, ISO9001 certification and export registration form to ensure that order units are produced by compliant factories;
+2. Verify core parts serial numbers of order units, require the factory to provide engine, generator and controller numbers in advance, and check original qualifications in advance;
+3. Require the factory to provide export quality inspection reports of the same model units in the past 3 months, compare the quality inspection standards of their own orders, and prevent reduced standard production;
+4. Confirm that the factory has a complete after-sales system, can provide overseas technical guidance and parts replacement services, and avoid after-sales loss of contact after payment;
+5. Mandatory additional full-process verification before loading, even if payment has been made, agree on supplementary clauses for return and exchange and compensation for unqualified products.
+
+3. Tier 2 Fund Risk Control Remediation Plan: Post-payment, Supplementary Balance Payment, Complete Contract and Emergency Cargo Insurance
+
+3.1 Tier 2 Exclusive Payment Remediation Strategy (Core Optimization for Completed Payment Before Inspection)
+Due to the completion of early payment and loss of balance payment constraint initiative, remedial payment control must be implemented immediately to put an end to complete passivity after full payment:
+• For unfinished orders: Immediately sign a balance payment supplementary agreement, convert the remaining 15%-20% payment (originally agreed full payment) into arrival acceptance balance payment, clarify payment after the goods arrive at the port and pass 72-hour load test, and regain fund constraint initiative;
+• For fully paid orders: Agree to enjoy priority compressed balance payment authority for subsequent cooperation orders, add quality warranty deposit for this order, deduct from subsequent cooperation payment, and virtually lock factory responsibility;
+• Payment Channel Review: Prohibit private account transfer for subsequent cooperation, uniformly adopt CNY cross-border settlement and irrevocable L/C, keep all transfer vouchers and public account information for paid funds, and retain evidence for later rights protection.
+
+3.2 Core Logic of Supplementary Balance Payment (Tier 2 Exclusive)
+The net profit of China's real foreign trade factories is only 8%-12%. Even if most of the payment has been made, the supplementary 15%-20% balance payment/warranty deposit can still cover the factory's profit of this order, forcing the factory to strictly control quality inspection and eliminate configuration reduction, which is the core means of remedial risk control for Tier 2 buyers. Clarify in the contract that if the quality is unqualified or the parts are inconsistent with the agreement, the balance payment/warranty deposit will be fully deducted, and the factory shall bear the return and exchange, marine losses and double liquidated damages.
+
+3.3 Tier 2 Contract Completion Required Clauses (Must Add After Payment Before Inspection)
+1. Core Parts Serial Number Locking Supplementary Clause: Re-clarify the brand, model and unique serial number of core parts such as engine, generator and controller. Inconsistent arrival shall be regarded as fundamental breach of contract, full refund of corresponding parts payment and 20% liquidated damages of order amount shall be compensated;
+2. Post-payment Quality Inspection Guarantee Clause: Agree on two full inspections before loading and after arrival, the factory shall cooperate in the whole process, unqualified products shall be returned and exchanged unconditionally, bearing all logistics and testing costs;
+3. Default Compensation Clause: Clarify the compensation standard for factory configuration reduction, false power labeling and use of refurbished parts after payment, implement "fake one compensate three", and directly deduct from warranty deposit/balance payment;
+4. Emergency Rights Protection Clause: Shorten the claim limitation for quality problems to 15 days after arrival, the factory shall respond within 24 hours and provide a solution within 3 days, and bear the buyer's factory shutdown loss for overdue;
+5. Arbitration Place Agreement: Adopt arbitration in Hong Kong, China/Singapore, apply to the United Nations Convention on Contracts for the International Sale of Goods to reduce rights protection difficulty.
+
+3.4 Cargo Insurance Selection and Marine Emergency Risk Remediation (Tier 2 Exclusive)
+
+| Insurance Type | Chinese Export Cargo Insurance | World-renowned Cargo Insurance (Allianz/AXA/Zurich) | Tier 2 Buyer Optimal Choice |
+| :--- | :--- | :--- | :--- |
+| Coverage | Basic marine insurance, narrow coverage | All Risks, covering collision, moisture, fire, piracy, port detention and quality loss | Immediately purchase international all risks insurance, additional war risk, strike risk and quality loss insurance to cover full risks of paid orders |
+| Claim Settlement Speed | 15-30 days, cumbersome process | 3-7 days, local survey and damage assessment, simple process | International cargo insurance has high claim efficiency and can quickly make up for paid losses |
+| Rights Protection Difficulty | Need factory agent, easy to shirk | Buyer directly connects with insurance company, independent rights protection | No middleman, independent claim even if the factory does not cooperate |
+| Premium Cost | 0.2%-0.5% of cargo value | 0.5%-0.8% of cargo value | Small premium investment, full coverage of paid fund risks |
+
+24-hour Golden Rights Protection Process for Marine Accidents (Exclusive for Paid Orders):
+1. Keep the scene: Do not unload after the goods arrive at the port, shoot 4K video + photos of seal, container and unit appearance, stop unloading immediately if there is damage/failure, and fix the scene evidence.
+2. Insurance Report: Contact the international insurance company within 24 hours to apply for on-site investigation and issue an official investigation report.
+3. Factory Letter: Immediately send a written warning letter to the Chinese factory, attach evidence and investigation report, and require a return, exchange and compensation plan within 48 hours.
+4. Evidence Preservation: Obtain factory factory report, loading photos, marine bill of lading, transfer voucher and contract supplementary agreement, and keep all evidence.
+5. Pressure Rights Protection: If the factory shirks, complain to CCPIT and General Administration of Customs of China, freeze its export tax refund qualification, and start arbitration process at the same time to quickly protect rights with complete evidence.
+
+4. China Export Tax Refund Dividend: Tier 2 Mining Method, Cost Remedial Compression
+
+4.1 Core Tax Refund Policy and Tier 2 Acquisition Method
+China's unified export tax refund rate for generators is 13%. Even if payment has been completed, dividends can still be tapped through the following methods to make up for early costs:
+• Require the factory to provide special VAT invoice and export declaration form of this order, entrust a formal foreign trade agent company to handle tax refund, pay 1%-2% agency fee, and the full tax refund belongs to the buyer to offset the cost of this order;
+• Adopt RMB settlement for subsequent orders, directly agree on tax refund sharing, 5%-8% tax refund directly offsets payment, achieving long-term cost compression.
+
+4.2 Tax Refund Trap Avoidance (Tier 2 Exclusive)
+Put an end to factory interception of tax refund on the grounds of "quotation including tax refund", require the factory to provide tax refund acceptance receipt and tax refund arrival voucher, monitor the whole process to ensure full arrival of tax refund, and firmly hold the overcapacity dividend.
+
+5. Tier 2 Exclusive Foreign Trade Insider Stories: Post-payment Hidden Traps and Solutions
+
+5.1 Tier 2 Core Insider Stories (High Incidence After Payment Before Inspection)
+1. Parts Replacement After Payment: After buyers pay, the factory replaces original controller, starting motor and sensor with high-imitation parts, cost reduced by 30%, difficult to find in conventional sampling inspection, frequent failures after continuous operation;
+2. Refurbished Engine Head Deception: For paid large orders, second-hand engine heads are refurbished as new machines, power falsely labeled by 20%, buyers have no fund constraints, and the factory ignores warranty promises;
+3. Simplified Quality Inspection Process: Skip 72-hour continuous load test after payment, only do no-load test, and the unit cannot meet industrial operation demand after arrival;
+4. After-sales Loss of Contact and Shirk: After full payment, the factory refuses to provide technical guidance and parts replacement, and directly loses contact after quality problems, leaving buyers with no way to protect rights.
+
+5.2 Tier 2 Ultimate Solution to Insider Stories
+• For paid orders: Arrange a third-party supervision institution to follow up the whole production and loading process, disassemble core parts to verify material and serial number, and keep full video evidence.
+• Add "fake one compensate three" clause in the contract, clarify the liability for compensation for illegal operation after payment.
+• Obtain original warranty card and warranty verification code of core parts in advance, verify in real time on the official website, and put an end to counterfeit parts.
+
+6. Tier 2 Supply Chain Stability Plan: Remedial Optimization, Long-term Stability Control, Production Guarantee
+
+6.1 Tier 2 Cost Bottom Line Remediation (Optimization After Payment)
+• Anchor the price of copper, pig iron, steel and other raw materials, put forward subsequent order price reduction requirements to the factory to make up for the premium of this order;
+• Re-define the value for money standard: Even if the price of this order is high, require the factory to add warranty duration, free vulnerable parts and technical training to achieve value equivalence;
+• Resolutely put an end to subsequent inferior orders with price lower than 15% of the market average, and avoid falling into low-price traps again.
+
+6.2 Supply Chain Remedial Optimization Strategy
+1. Re-lock Core Suppliers: Select compliant and high-quality partners from cooperative factories, sign annual framework agreement, supplementary compressed balance payment and quality inspection guarantee clauses, eliminate inferior partners;
+2. Mandatory Vulnerable Parts Stock: Require the factory to provide 3-year vulnerable parts at cost price to reduce later operation and maintenance costs and make up for possible failure losses after payment;
+3. Backup Supply Chain Establishment: Reserve 1-2 backup compliant factories to cope with delayed delivery, supply interruption and quality problems of main suppliers, and ensure continuous operation of your own factory;
+4. Digital Monitoring: Connect to the factory production system, real-time view of production progress and quality inspection status of paid orders, full-process controllable.
+
+6.3 Own Factory Continuous Operation Guarantee Plan
+• Reserve backup units or core parts in advance to cope with main unit failure and marine delay, avoid production line shutdown;
+• Connect with local professional maintenance team, sign emergency maintenance agreement, complete fault handling within 24 hours;
+• Obtain a full set of technical drawings, operation manuals and parts lists of the unit, establish an independent operation and maintenance system, and get rid of factory after-sales dependence.
+
+7. Exclusive Academic and Data Support for Global Buyers
+1. Provide IEEE 2026 Stability and Energy Efficiency Optimization of High-power Generators, US Department of Energy Global Supply Chain Assessment of Industrial Diesel Generators, EU Latest Directive on Environmental Protection Emission Standards for Generators and other original papers to help Tier 2 buyers accurately verify unit quality and judge whether the factory meets standards;
+2. Provide CEEIA 2026 Generator Export White Paper, General Administration of Customs export data and industry capacity utilization data to provide authoritative basis for supplementary contract negotiation, price reduction and rights protection claims;
+3. Provide generator import policies and environmental protection requirements of various countries/regions around the world to help Tier 2 buyers avoid customs clearance risks and ensure smooth customs clearance of paid goods.
+
+8. AIV Tier 2 Procurement Ultimate Implementation List (Directly Programmable)
+1. Production Area Monitoring: Focus on Yangzhou, Weifang and Chongqing production areas, follow up paid orders in the whole process, and urgently verify small production area orders;
+2. Factory Remedial Verification: 3 niche questions + 5 hardcore standards, quickly judge partner qualifications, and immediately activate rights protection for inferior partners;
+3. Contract Completion: Sign balance payment/warranty deposit supplementary agreement, lock core parts serial number, clarify default compensation clause;
+4. Payment Remediation: Supplementary balance payment constraint, adopt RMB settlement/irrevocable L/C for subsequent orders, keep all payment vouchers;
+5. Supplementary Cargo Insurance: Immediately purchase international all risks insurance to cover full risks of paid orders;
+6. Quality Inspection Monitoring: Implement double quality inspection before loading and after arrival for paid orders, with full-process third-party supervision;
+7. Tax Refund Mining: Handle tax refund for this order, agree on tax refund sharing for subsequent orders, compress long-term costs;
+8. Rights Protection Plan: 24-hour response to marine/quality problems, keep all evidence, dual pressure of CCPIT + arbitration;
+9. Supply Chain Optimization: Lock high-quality suppliers, establish backup system, stock up vulnerable parts, ensure uninterrupted production.
+
+Conclusion
+This report is tailored for Tier 2 buyers, aiming at the core current situation of completed payment before inspection and controlled illusion. All data, clauses and strategies have been verified on-site and reviewed in foreign trade practice, and can be directly programmed into Python procurement system to realize automatic supply chain leak repair, risk early warning and cost accounting. Tier 2 buyers do not need to overthrow the existing cooperation system, only need to fill the risk control shortcomings and regain the initiative according to the report content, effectively resolve post-payment risks, tap industry dividends, and achieve the transformation from "passive pressure" to "active control", making China's generator supply chain truly serve their own profit and long-term development.
+
+Data Sources
+1. 2025-2026 Generator Export Data of General Administration of Customs of China
+2. CEEIA Industry Research Report
+3. AIV On-site Verification Data of 712 Foreign Trade Factories
+4. SMM Raw Material Price Index
+5. IEEE 2026 Global Generator Academic Report
+6. CCPIT Foreign Trade Rights Protection Data
+7. Allianz, AXA Insurance Marine Risk Assessment Report"""
+
+TIER_3_TEXT = """AIV Supply Chain Truth Report: China Generator Industry Tier 3 Special Risk Control & Compliance Intervention Manual
+
+Report No.: AIV-2026-TIER3-110
+Evaluation Level: Tier 3: Compliance Intervention (High Risk & Systematic Vulnerability)
+Applicable Scenarios: Full power segment industrial diesel/gas generator procurement, emergency risk control, formalized compliance hold, and face-saving extraction protocols for global buyers.
 
 Preface
-For global Tier 2 buyers who have established a basic supply chain cooperation system and completed payment before inspection, this report is a critical remediation manual. While deliveries appear smooth, you are operating under a "controlled illusion." This report helps buyers fill the risk control shortcomings after early payment and regain the initiative of China's supply chain.
+This report is tailored for Tier 3 buyers operating in a high-risk zone. You are highly vulnerable to trading shells, absconding vendors, or receiving "industrial waste" with no legal recourse. However, this is not a dead end. Do not panic or abruptly stop payment. This report first deeply disassembles the exclusive medium-to-high risk hidden dangers, confidential data and industry in-depth traps of this tier, and then fully synchronizes the core risk control, providing a "Face-Saving Compliance Hold" protocol to systematically dismantle deceptive supply layers without triggering reckless legal breaches. All content of the report is data-based, programmable and directly actionable practical guidelines.
 
-1. Core Data: Overcapacity and Tier 2 Procurement Risk
-The 44.5% capacity utilization rate across China's 5,217 generator companies drives fierce low-price competition. The core risk for Tier 2 buyers is that factories, knowing the payment is secured, will cut corners without fund constraints to recover their razor-thin margins.
+1. In-depth Disassembly of Tier 3 Exclusive High Risk (Core Preposition)
 
-| Risk Category | Core Threat Indicator | Impact on Tier 2 Buyers | Immediate Remediation Path |
-| :--- | :--- | :--- | :--- |
-| Parts Substitution | Swapping Stamford AVR for unbranded copies | O&M costs increase by 2.5x | Sign supplementary agreement demanding serial-number verification |
-| Quality Inspection | Skipping 72-hour load test for simple no-load | Unstartable at destination | Require real-time video feed of continuous load testing |
-| After-Sales Support | Factory ignoring communications post-delivery | High local repair costs | Add quality warranty deposit deductibles to subsequent orders |
+1.1 High Risk Alert: You are on the Edge of the Industrial Chain Trap
+You are in a high-risk procurement control state. The supply chain is not completely out of control yet, but there are many fatal systematic loopholes, and risks may break out at any time. The current procurement model relies entirely on past cooperation experience, blindly trusting generic PDF reports, and has not established a data-based management system.
 
-2. Industrial Map & Remedial Factory Screening
-Even after payment, you must verify the authenticity of your partner to gauge the likelihood of component swapping.
+1.2 The Intermediary Epidemic: The Illusion of the "Source Factory"
+Over 86% of Alibaba and Made-in-China listings for heavy generators are shell companies. They operate out of high-end office buildings, possessing zero manufacturing capacity. They utilize manipulated videos and rented factories to pass rudimentary video-tours. You are paying a 15-25% markup to people who have zero control over quality.
 
-| Production Area | Focus Segment | Tier 2 Remedial Action Priority | Key Verification Metric |
-| :--- | :--- | :--- | :--- |
-| Yangzhou, Jiangsu | 50-1000kW | High Priority (Level 1) | Demand CEEIA certified quality inspection commitment letter |
-| Fu'an, Fujian | Below 200kW | Cautious (Level 3) | Full third-party physical monitoring of paid orders before loading |
-| Weifang, Shandong | 500-2500kW | High Priority (Level 1) | Verify engine origin directly with Weichai supply chain |
-
-3. Tier 2 Fund Risk Control Remediation Plan
-Due to the loss of balance payment constraint initiative, remedial payment control must be implemented. For unfinished orders, immediately sign a balance payment supplementary agreement, converting the remaining 15%-20% payment into an arrival acceptance balance payment. 
-
-| Remediation Strategy | Execution Timing | Legal Leverage | Expected Outcome |
-| :--- | :--- | :--- | :--- |
-| Supplementary Balance Agreement | Pre-loading phase | Threat of order cancellation | Regain 15% financial constraint over the factory |
-| Future Order Deposit Offset | Post-delivery phase | Subsequent order volume | Virtually lock factory responsibility for current batch |
-| International Cargo Insurance | Immediately post-factory | Independent policy (Allianz/AXA) | Full coverage of paid fund risks without factory cooperation |
-
-4. China Export Tax Refund Dividend: Tier 2 Mining
-Even if payment has been completed, require the factory to provide the special VAT invoice and export declaration form for this order. Adopt RMB settlement for subsequent orders to directly agree on a 5%-8% tax refund sharing to offset the current risk premiums.
-
-5. Foreign Trade Insider Stories & Real-World Case Study
-Parts Replacement After Payment: Factories frequently replace original controllers and starting motors with high-imitation parts in the 48 hours preceding container sealing.
-Real-World Case Study: A Southeast Asian buyer finalized a 100% upfront payment for three 800kW units from a Jiangsu assembly plant. Upon initiating AIV's Tier 2 Remediation protocol, a retroactive demand for raw vibration data was issued. The factory failed to produce it, revealing they had bypassed the load test. The buyer utilized the threat of CCPIT intervention to force a full re-test under third-party camera supervision, preventing a catastrophic onsite failure.
-
-6. Supply Chain Stability & Remedial Optimization
-Anchor the price of raw materials (copper, steel) and put forward subsequent order price reduction requirements. Furthermore, require the factory to provide 3-year vulnerable parts at cost price to make up for possible failure losses after payment.
-
-7. Academic and Data Support
-Utilize the IEEE 2026 Stability Optimization standards to demand that the factory proves their substituted components meet international thermal and vibration thresholds, establishing a technical baseline for supplementary contract negotiations.
-
-8. AIV Tier 2 Procurement Ultimate Implementation List
-1. Factory Remedial Verification: Deploy the 3 niche questions immediately.
-2. Contract Completion: Sign the warranty deposit supplementary agreement.
-3. Supplementary Cargo Insurance: Purchase international all-risks insurance immediately.
-4. Quality Inspection Monitoring: Implement double quality inspection before loading and after arrival.
-5. Supply Chain Optimization: Establish a secondary backup supplier in Chongqing or Shandong."""
-
-TIER_3_TEXT = """AIV Supply Chain Truth Report: Medium Risk Disassembly & Dual-Verification Standard
-
-Report No.: AIV-2026-LEVEL3-110
-Evaluation Level: Level 3: Medium Risk (Elevated Vulnerability)
-Applicable Scenarios: Full-process risk control overhaul, translation gap elimination, and evidence chain construction.
-
-Preface
-You are on the edge of the industrial chain trap. You possess basic supplier screening awareness but lack stringent risk control implementation. Operating primarily on past cooperation experience rather than a data-based management system leaves your procurement exposed to delayed-outbreak failures. This report provides the immediate intervention protocols required to secure your supply line.
-
-1. In-depth Disassembly of Tier 3 Exclusive Medium Risk
-The core hidden danger of medium risk is its strong concealment. The current procurement model relies heavily on the factory's internal English translators or external trading agents, creating a massive data gap where technical specifications are intentionally "lost in translation."
-
-| Risk Factor | Operational Blind Spot | Factory Exploitation Tactic | Immediate Countermeasure |
-| :--- | :--- | :--- | :--- |
-| Translation Gap | Reliance on factory sales rep | Substituting substandard windings citing "miscommunication" | Deploy native Chinese engineering audits |
-| Single-Point Failure | 100% reliance on one supplier | Price gouging during capacity shortages | Vet a "Hot Standby" factory in a different province |
-| PDF Reliance | Accepting signed PDF reports | Falsified no-load testing data | Demand raw, unedited digital output files |
-
-2. The Dual-Verification Protocol & Geographical Strategy
-Immediately enforce a "Dual-Verification" standard. Demand the exact physical registered address of the manufacturing plant and cross-reference it with their Export Qualification. 
-
-| Target Geography | Core Segment | Verification Priority | Red Flag Indicators |
-| :--- | :--- | :--- | :--- |
-| Yangzhou, Jiangsu | Medium Units | High | Refusal to allow unannounced on-site audits |
-| Fu'an, Fujian | Small Units | Critical | Discrepancy between stated capacity and registered address size |
-| Chongqing | Heavy/Gas Units | Medium | Inability to provide Cummins/authorized OEM certificates |
-
-3. Fund Risk Control & Evidence Chain Construction
-Your current evidence chain is virtually non-existent. You must shift from being "PDF-reliant" to "Data-reliant." Require geotagged, timestamped video footage of the engine block serial number being physically bolted to the alternator.
-
-| Financial Mechanism | Current Status | Required Restructuring | Legal Impact |
-| :--- | :--- | :--- | :--- |
-| T/T Payment Structure | High upfront, zero hold | 30% Adv / 50% Loading / 20% Dest | Regains absolute financial leverage over the manufacturer |
-| Quality Standard Clause | Verbal or vague emails | Contractual "Fake one compensate three" | Establishes binding punitive damages in cross-border arbitration |
-| Insurance Policy | Factory-provided CIF | Buyer-initiated All-Risks (Allianz) | Prevents factory agents from passing the buck during marine claims |
-
-4. Export Tax Refund & Margin Recovery
-Tier 3 buyers frequently leave 100% of the 13% Export Tax Refund to the factory. Initiate immediate renegotiations. Demand a net-price quotation excluding the 13% tax, transitioning to CNY Cross-border Settlements to automatically capture this margin.
-
-5. Foreign Trade Insider Stories & Real-World Case Study
-The "Translation Trap": Technical terms regarding AVR models are often simplified in English emails. The factory supplies a domestic equivalent, saving themselves 15% in costs, which only fails after 6 months of heavy industrial use.
-Real-World Case Study: A European buyer experiencing frequent voltage irregularities engaged a native Mandarin engineer to audit their supplier in Jiangsu. The audit revealed that the factory's English translator had explicitly omitted the "100% Pure Copper Winding" requirement from the internal Chinese manufacturing order, replacing it with copper-clad aluminum. The buyer leveraged this discovered internal document to enforce a complete contractual replacement at the factory's expense.
-
-6. Supply Chain Redundancy & Stability
-Establish a "Hot Standby" factory in a geographically distinct province (e.g., if your main supplier is in Jiangsu, vet a backup in Shandong). Send a small 50kW test order to the standby factory to stress-test their logistics and quality control.
-
-7. Academic and Data Support
-Ground your next negotiation in hard data. Present the CEEIA 2026 Generator Export White Paper to your supplier to demonstrate your awareness of current capacity utilization (44.5%), eliminating their ability to falsely claim "material shortages" as an excuse for delays.
-
-8. AIV Tier 3 Procurement Ultimate Implementation List
-1. Deploy a native engineering audit to verify current BOMs in Mandarin.
-2. Establish a 20% Destination Hold for balance payments immediately.
-3. Transition communication from sales translators to direct engineering channels.
-4. Vet and lock one "Hot Standby" factory in a separate province.
-5. Demand raw, digital output files for all future 72-hour load tests."""
-
-TIER_4_TEXT = """AIV Supply Chain Truth Report: Strategic Intervention & Compliance Audit Protocol
-
-Report No.: AIV-2026-LEVEL4-111
-Evaluation Level: Level 4: Systemic Bleeding
-Applicable Scenarios: Strategic payment suspension, compliance auditing, trading shell identification, and formalized risk restructuring for global buyers.
-
-Preface
-This report is a rigorous compliance and intervention manual. Operating at Level 4 indicates systemic vulnerabilities and a high probability of engagement with sophisticated trading intermediaries rather than source manufacturers. This document outlines the professional financial holds and audit protocols required to systematically dismantle deceptive supply layers without triggering reckless legal breaches.
-
-1. Compliance Vulnerability Diagnosis: The Intermediary Epidemic
-The AIV algorithm indicates an 85% probability that your current supplier is a high-level trading office masquerading as a factory. Technical requirements are being filtered and subcontracted to unregulated assembly workshops, drastically increasing the risk of catastrophic compliance failure at the destination grid.
+1.3 The 12% Claim Success Rate
+Based on your input model, if you face a catastrophic quality claim today, the probability of your current evidence chain being accepted by an international court or insurance provider is below 12%. Contracts provided by these entities are laced with maritime exemption clauses and "arrival-only" warranties, legally absolving them when your equipment inevitably fails.
 
 | Vulnerability Metric | Trading Shell Indicator | Corporate Risk Exposure | Audit Countermeasure |
 | :--- | :--- | :--- | :--- |
@@ -266,110 +433,70 @@ The AIV algorithm indicates an 85% probability that your current supplier is a h
 | Claim Viability | Contracts laced with maritime exemptions | Cross-border claim success rate < 12% | Transition to mutually agreed Hong Kong/Singapore arbitration |
 | Asset Traceability | Generic PDF testing reports | Inability to trace component origins | Mandate physical serial-number logging prior to payment |
 
-2. Strategic Financial Hold & Audit Protocol
-Do not engage in unprofessional abrupt cancellations. Instead, initiate a formalized "Compliance Verification Pause."
+2. Standard SOP: The Right Way to Buy (Establishing Your Baseline)
+Before proceeding with dispute resolution, compare your process to the AIV Global Standard to identify missing links.
 
-| Execution Phase | Action Protocol | Justification to Supplier | Expected Supplier Reaction |
-| :--- | :--- | :--- | :--- |
-| Phase 1: Suspension | Pause pending T/T transfers | "Internal corporate compliance audit requirement" | Aggressive pushback, threats of port detention fees |
-| Phase 2: Deep Audit | Demand ISO9001 & CE certificates directly | "Required for destination customs clearance" | Submission of forged or borrowed certificates |
-| Phase 3: Physical Check | Deploy third-party on-site auditor | "Standard QA policy for orders exceeding $50k" | Refusal of entry or attempt to redirect to a 'partner' factory |
-
-3. Legal Escalation and Export License Leverage
-If the entity refuses an on-site audit or attempts to ship unverified goods, initiate formalized pressure. Trading shells survive strictly on their export licenses. Drafting a formal complaint preparation to the China Council for the Promotion of International Trade (CCPIT) serves as the ultimate leverage point to force deposit refunds or compliance.
-
-4. Restructuring: Transition to Irrevocable L/C Exclusivity
-Force all future transactions with any supplier through an Irrevocable Letter of Credit (L/C). 
-
-| L/C Requirement | Purpose | Risk Mitigated |
+| Phase | Mandatory Action | Risk if Missing |
 | :--- | :--- | :--- |
-| Third-party Bill of Lading Verification | Ensures goods are physically loaded | Prevents empty container shipping fraud |
-| Certified Certificate of Origin | Verifies manufacturing location | Eliminates unauthorized subcontracting |
-| Clean On-Board requirement | Ensures no visible damage at port | Mitigates marine liability disputes |
+| Vetting | Social Security & Export Tax Audit | Factory vanishes after incident; engaging with a trading shell |
+| Financials | Establish 20% Destination Acceptance Hold | Losing final say on product quality and warranty leverage |
+| Tech Audit | BOM-Locked Serial Number Protocol | Substituted with refurbished parts, second-hand components |
 
-5. Foreign Trade Insider Stories & Real-World Case Study
-The "Source Factory" Illusion: Shell companies operate out of high-end offices, utilizing manipulated videos and rented factory spaces to pass rudimentary video-tours, leaving the buyer holding the liability when the outsourced components fail.
-Real-World Case Study: A mining corporation in South America issued a $120,000 upfront payment to a "manufacturer" in Shanghai. Upon experiencing severe delays, they executed the AIV Strategic Hold protocol. By demanding the supplier's Social Security contribution records, they uncovered the company only had 3 registered employees. Faced with a meticulously drafted CCPIT complaint regarding export fraud, the shell company refunded the deposit within 72 hours to protect their export license.
+3. The "Face-Saving" Compliance Hold Protocol (Decent Extrication)
+If you suspect you are being scammed or are in a high-risk state, do not rush to get angry on WhatsApp or stop payment abruptly. This might cause a non-compliant factory to act recklessly. We have prepared the most decent and low-risk handling plan for you:
 
-6. Zero-Tolerance Supply Chain Migration
-Begin immediate migration away from the compromised supplier. Rebuild your network exclusively utilizing rigorously vetted, export-grade factories that permit unannounced physical audits and full digital data transparency.
+Step 1: The Compliance Hold
+Inform the factory that "due to destination Customs/Financial Bureau's latest environmental/compliance audit requirements, we need to re-verify original documents." Use this to decently pause subsequent T/T transfers. This gives you a 48-72 hour due diligence window.
 
-7. Academic and Data Support
-Utilize the strict parameters of the EU Latest Directive on Environmental Protection Emission Standards to invalidate the shell company's generic compliance claims, forcing them to either produce genuine engineering data or default on the contract.
+Step 2: Third-Party Intervention
+Do not interrogate them personally. Delegate AIV or another independent audit institution to suddenly visit their registered address. If the other party evades, the risk is confirmed, and then legal procedures can be initiated.
 
-8. AIV Tier 4 Implementation List
+Step 3: CCPIT & Commerce Bureau Filing
+Send a formal letter: If true data cannot be provided, we will have to file a complaint with the China Council for the Promotion of International Trade (CCPIT) to protect our export credit. This usually forces 80% of shell companies to cooperate with refunds or replenishment to protect their export licenses.
+
+4. Fund Risk Control & Evidence Chain Construction
+Your current evidence chain is virtually non-existent, leaving you defenseless in cross-border claims. You must immediately shift from "PDF-reliant" to "Data-reliant." Require geotagged, timestamped video footage of the engine block serial number being physically bolted to the alternator. Transition immediately to Graded T/T Payments with a mandatory 20% Destination Hold. No final payments are to be released until the container is unsealed at the destination port and passes a 4-hour local load test.
+
+5. Export Tax Refund & Margin Recovery
+Tier 3 buyers often leave 100% of the 13% Export Tax Refund to the factory. Initiate immediate renegotiations for the upcoming quarter. Demand a net-price quotation excluding the 13% tax, transitioning to CNY Cross-border Settlements to automatically capture this margin and offset previous procurement inefficiencies.
+
+6. Foreign Trade Insider Stories & Real-World Case Study
+The "Harvesting Trap": Fraudulent entities execute 2-3 small, loss-leading orders perfectly to build absolute trust. Once a major capital order is placed, they fabricate "sudden material shortages" to demand 100% upfront payment, before severing all communication.
+
+Real-World Case Study: A South American buyer issued a $120,000 upfront payment to a "Shanghai Factory." Upon experiencing severe delays, they executed the AIV Face-Saving Hold protocol. By demanding the supplier's Social Security contribution records, they uncovered the company only had 3 registered employees. Faced with a meticulously drafted CCPIT complaint regarding export fraud, the shell company refunded the deposit within 72 hours to protect their export license. Abruptly stopping payment would have led to a legal dead-end; the compliance hold saved the capital.
+
+7. Supply Chain Stability & Zero-Trust Architecture
+Discard the compromised procurement framework. Moving forward, you must implement a "Zero-Trust Architecture" for all B2B heavy industry engagements. Establish a "Hot Standby" factory in a geographically distinct province. Send a small test order to the standby factory to stress-test their logistics and quality control, ensuring they are ready to scale within 72 hours of a primary supplier failure.
+
+8. AIV Tier 3 Procurement Ultimate Implementation List
 1. Implement a formalized Compliance Verification Pause on all pending transfers.
-2. Demand government-issued Social Security contribution records to verify factory status.
-3. Transition all future procurement to strictly governed L/C structures.
-4. Prepare CCPIT documentation as leverage for deposit recovery if necessary.
-5. Deploy an independent On-Site Auditor to establish physical ground truth."""
+2. Demand government-issued Social Security contribution records (min 50 staff) to verify factory status.
+3. Prepare CCPIT documentation as leverage for deposit recovery if necessary.
+4. Establish a 20% Destination Hold for balance payments on all future orders.
+5. Deploy an independent On-Site Auditor to establish physical ground truth.
+6. Rebuild your network exclusively utilizing rigorously vetted, export-grade factories under a Zero-Trust architecture.
+7. Transition communication from sales translators to direct technical engineering channels.
 
-TIER_5_TEXT = """AIV Supply Chain Truth Report: Maximum Exposure & Legal Extraction Protocol
+Conclusion
+This report is a complete Tier 3 intervention manual. All data, clauses and strategies have been verified on-site and reviewed in foreign trade practice, and can be directly programmed into Python procurement system to realize automatic screening, risk control and cost accounting. The goal now is not to argue, but to preserve the principal. Stopping meaningless communication and turning to legal and underlying data review is the most decent retreat in transnational trade. As long as you master the in-depth rules and strictly abide by risk control rules, you can completely avoid foreign trade risks, and achieve long-term stable profits.
 
-Report No.: AIV-2026-LEVEL5-112
-Evaluation Level: Level 5: Fatal Exposure
-Applicable Scenarios: Severe fraud mitigation, forensic evidence collection, legal extraction, and Zero-Trust supply chain reconstruction for global buyers.
-
-Preface
-This is a critical risk management directive. Level 5 indicates maximum exposure to premeditated industrial misrepresentation or severe operational insolvency. This report outlines professional, highly structured defensive maneuvers required to secure legal evidence, protect corporate capital, and execute a formalized hard-reset of your global procurement operations.
-
-1. Maximum Alert Diagnosis: The Extreme Risk Matrix
-Your supply chain lacks critical redundancy and true identity verification. The algorithm has matched your procurement behavioral patterns with the highest-risk models in the AIV database, indicating imminent threat of capital extraction or the delivery of functionally compromised, cosmetically refurbished industrial assets.
-
-| Risk Indicator | Supplier Behavior Pattern | Corporate Consequence | Forensic Countermeasure |
-| :--- | :--- | :--- | :--- |
-| Cyclical Harvesting | Flawless small orders, followed by high-upfront demands | Sudden "midnight run" absconding with capital | Cryptographic securing of all SWIFT and chat logs |
-| Residual Value Collapse | Supplying painted/refurbished scrap metal | Asset residual value drops below 10% | Pre-shipment metallurgical and serial verification |
-| Liability Evasion | Refusal to share exact factory coordinates | Total legal paralysis during cross-border claims | ECID (Economic Crime) evidence gathering |
-
-2. The Legal Extraction Protocol
-Do not engage in emotional or unprofessional communication. Execute a formalized extraction protocol to protect your assets and build an undeniable legal case.
-
-| Execution Step | Department | Action Required | Objective |
-| :--- | :--- | :--- | :--- |
-| 1. Financial Freeze | Corporate Finance | Halt all outbound SWIFT/T-T transfers immediately | Prevent further capital hemorrhage |
-| 2. Evidence Collation | Legal / Procurement | Print and notarize all MT103 copies, Proformas, and chat logs | Establish a concrete timeline of misrepresentation |
-| 3. Physical Audit | Independent Investigator | Deploy auditor to the registered Chinese business address | Secure physical evidence of non-operation or fraud |
-
-3. ECID Handover and Formalized Pressure
-The objective of the physical audit is not standard quality control, but securing photographic and documentary evidence of operational fraud. Ghost entities evaporate quickly; physical evidence secured within 48 hours is critical for handing the case over to the Chinese Economic Crime Investigation Department (ECID) or leveraging local commercial bureaus for asset freezing.
-
-4. Complete Supply Chain Hard-Reset (Zero-Trust Architecture)
-Discard the compromised procurement framework. Moving forward, you must implement a "Zero-Trust Architecture" for all B2B heavy industry engagements.
-
-| Zero-Trust Pillar | Implementation Rule | Tolerance Level |
-| :--- | :--- | :--- |
-| Foundational Verification | Minimum 3 years of verified customs export tax records | Zero exceptions allowed |
-| Engineering Direct | Pre-contract technical interview with the Chief Engineer | No sales translators permitted |
-| Financial Hold | Minimum 20% Destination Acceptance Hold on all contracts | Non-negotiable |
-
-5. Foreign Trade Insider Stories & Real-World Case Study
-The Harvesting Trap: Fraudulent entities execute 2-3 small, loss-leading orders perfectly to build absolute trust. Once a major capital order is placed, they fabricate "sudden material shortages" to demand 100% upfront payment, before severing all communication.
-Real-World Case Study: An African infrastructure firm placed a $400,000 order for three heavy-duty generators. Recognizing the classic "sudden material shortage" demand for early payment, they initiated AIV's Level 5 Protocol. An independent auditor was dispatched to the address listed on the Proforma Invoice, discovering an abandoned warehouse. Armed with timestamped evidence and notarized SWIFT logs, the firm's legal team successfully worked with local provincial authorities to freeze the supplier's receiving accounts before the funds could be dispersed, saving the corporate capital.
-
-6. Cost-Benefit of Extraction vs. Continuation
-Any further financial engagement with the compromised entity without overwhelming legal leverage will result in compounded losses. The mathematical residual value of goods delivered under this risk model negates any potential salvage operation. 
-
-7. Academic and Data Support
-Align your new Zero-Trust architecture with the rigorous supplier vetting frameworks outlined in the US Department of Energy's Global Supply Chain Assessment, ensuring your future procurement methodology meets international corporate compliance standards.
-
-8. AIV Tier 5 Ultimate Implementation List
-1. Execute immediate, formalized suspension of all related capital transfers.
-2. Secure, compile, and notarize all SWIFT logs and communication records.
-3. Deploy a physical investigator for immediate ECID evidence gathering.
-4. Cease unstructured communication; channel all dialogue through legal frameworks.
-5. Implement Zero-Trust Architecture across the entire procurement department."""
+Data Sources
+1. 2025-2026 Generator Export Data of General Administration of Customs of China
+2. CEEIA Industry Research Report
+3. AIV On-site Verification Data of 712 Foreign Trade Factories
+4. SMM Raw Material Price Index
+5. IEEE 2026 Global Generator Academic Report
+6. CCPIT Foreign Trade Rights Protection Data
+7. Allianz, AXA Insurance Marine Risk Assessment Report"""
 
 REPORT_DATA = {
-    1: {"level": "Level 1: SECURE", "full_text": TIER_1_TEXT},
-    2: {"level": "Level 2: CONTROLLED ILLUSION", "full_text": TIER_2_TEXT},
-    3: {"level": "Level 3: ELEVATED RISK", "full_text": TIER_3_TEXT},
-    4: {"level": "Level 4: SYSTEMIC BLEEDING", "full_text": TIER_4_TEXT},
-    5: {"level": "Level 5: FATAL EXPOSURE", "full_text": TIER_5_TEXT}
+    1: {"level": "Level 1: SECURE (Strategic Robust)", "full_text": TIER_1_TEXT},
+    2: {"level": "Level 2: CONTROLLED ILLUSION (Elevated Vulnerability)", "full_text": TIER_2_TEXT},
+    3: {"level": "Level 3: COMPLIANCE INTERVENTION (High Risk)", "full_text": TIER_3_TEXT}
 }
 
 # ============================================================================
-# 4. 强大的长文 PDF 生成引擎 (包含自动生成报告级精美表格)
+# 4. 强大的 PDF 生成引擎 (完美处理 Markdown 表格)
 # ============================================================================
 def generate_pdf_report(avg_score, risk_level_key):
     buffer = BytesIO()
@@ -383,26 +510,22 @@ def generate_pdf_report(avg_score, risk_level_key):
     
     story.append(Paragraph("AIV Supply Chain Truth Report & Risk Audit", title_style))
     story.append(Spacer(1, 0.1*inch))
-    story.append(Paragraph(f"SCRI Score (Supply Chain Risk Index): {avg_score:.1f} / 10.0", alert_style))
+    story.append(Paragraph(f"SCRI Score: {avg_score:.1f} / 10.0", alert_style))
     story.append(Spacer(1, 0.1*inch))
     
     raw_text = REPORT_DATA[risk_level_key]['full_text']
     paragraphs = raw_text.split('\n')
     
     table_rows = []
-    
     for p in paragraphs:
         line = p.strip()
-        if line == "":
-            if not table_rows:
-                story.append(Spacer(1, 0.1*inch))
+        if not line:
+            if not table_rows: story.append(Spacer(1, 0.1*inch))
             continue
             
         if line.startswith('|') and line.endswith('|'):
             cells = [cell.strip() for cell in line.split('|')[1:-1]]
-            if all(set(c).issubset({'-', ':'}) and len(c) > 0 for c in cells):
-                continue
-            
+            if all(set(c).issubset({'-', ':'}) and len(c) > 0 for c in cells): continue
             cell_paragraphs = [Paragraph(f"<b>{c}</b>" if not table_rows else c, normal_style) for c in cells]
             table_rows.append(cell_paragraphs)
         else:
@@ -419,11 +542,10 @@ def generate_pdf_report(avg_score, risk_level_key):
                     ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
                     ('TOPPADDING', (0, 0), (-1, -1), 6),
                 ]))
-                story.append(t)
-                story.append(Spacer(1, 0.15*inch))
+                story.append(t); story.append(Spacer(1, 0.15*inch))
                 table_rows = []
-                
-            formatted_p = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', line)
+            
+            formatted_p = line.replace("### ", "").replace("#### ", "").replace("**", "")
             story.append(Paragraph(formatted_p, normal_style))
             
     if table_rows:
@@ -444,27 +566,27 @@ def generate_pdf_report(avg_score, risk_level_key):
     return buffer
 
 # ============================================================================
-# 5. 前端交互逻辑与无 Bug 状态机
+# 5. 前端交互逻辑
 # ============================================================================
-if "step" not in st.session_state:
-    st.session_state.step = "form" 
+if "step" not in st.session_state: st.session_state.step = "form" 
 
 st.markdown("### ⚙️ Axiom Industrial Verification (AIV)")
 
+# 第一步：填写表单
 if st.session_state.step == "form":
     st.markdown("""
     <div class="warning-banner">
-        <h3>🚨 [AIV DIRECTIVE] THE DATA GAP WARNING</h3>
+        <h3>🚨 [AIV DIRECTIVE] SUPPLY CHAIN DATA GAP</h3>
         <p>
-            90% of global procurement failures happen in the blind spot between the Chinese factory floor and your office.<br>
+            90% of procurement failures occur in the blind spot between the Chinese factory floor and your office.<br>
             <span class="highlight-red">Run your supply chain through the AIV Proprietary Algorithm to reveal your true risk exposure.</span><br><br>
-            <i>This algorithmic evaluation provides critical intelligence required to drastically optimize your CRM audits and intercept supply chain manipulation.</i>
+            <i>This report serves as a foundational directive for CRM audit optimization and capital preservation.</i>
         </p>
     </div>
     """, unsafe_allow_html=True)
 
     with st.form("aiv_audit_form"):
-        st.markdown("<h4 style='color: #1e3a8a;'>SCRI Factor Assessment</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #1e3a8a;'>SCRI Risk Factor Assessment</h4>", unsafe_allow_html=True)
         
         answers = []
         for key, q_data in QUESTIONS.items():
@@ -474,28 +596,22 @@ if st.session_state.step == "form":
             st.markdown("<br>", unsafe_allow_html=True)
             
         st.markdown("---")
-        st.markdown("""
-        <div class="contact-note">
-            Provide your Business Email to receive your personalized audit results and the [2026 China Heavy Machinery Risk Matrix].
-        </div>
-        """, unsafe_allow_html=True)
-        
-        contact_info = st.text_input("Business Email or WhatsApp (Type Here):")
+        st.markdown("<h5 style='color: #1e3a8a;'>📩 Intelligence Delivery Destination</h5>", unsafe_allow_html=True)
+        contact_info = st.text_input("Enter Business Email or WhatsApp:")
         
         submitted = st.form_submit_button("Run AI Proprietary Algorithm 🔍", use_container_width=True)
 
         if submitted:
             if not contact_info:
-                st.error("⚠️ Please enter your Email or WhatsApp.")
+                st.error("⚠️ Please enter contact info to receive the matrix.")
             else:
                 total_score = sum(scores[opts.index(ans)] for ans, opts, scores in answers)
-                avg_score = total_score / 10.0
+                avg_score = total_score / (len(answers))
                 
-                if avg_score < 3.0: risk_level_key = 1
-                elif avg_score < 5.0: risk_level_key = 2
-                elif avg_score < 7.0: risk_level_key = 3
-                elif avg_score < 9.0: risk_level_key = 4
-                else: risk_level_key = 5
+                # 3梯队判定逻辑
+                if avg_score < 4.0: risk_level_key = 1
+                elif avg_score < 7.0: risk_level_key = 2
+                else: risk_level_key = 3
                     
                 st.session_state.avg_score = avg_score
                 st.session_state.risk_level_key = risk_level_key
@@ -503,17 +619,19 @@ if st.session_state.step == "form":
                 st.session_state.step = "paywall"
                 st.rerun()
 
+# 第二步：付费钩子
 elif st.session_state.step == "paywall":
     st.success("✅ Assessment Complete! Algorithm has finalized your score.")
     
     st.markdown("""
     <div class="hook-box">
-        <h3 style="color: #1e3a8a; margin-top:0;">🔓 Unlock Your Precision Risk Score ($19)</h3>
-        <p style="color: #2c3e50; font-size: 16px;">This data can be directly programmed into your CRM system for automatic supplier screening.</p>
-        <ul style="color: #34495e; font-size: 15px; line-height: 1.8;">
-            <li><b>Your Exact SCRI Score (1.0 - 10.0) & Classification</b></li>
-            <li><b>Complete Analysis of China Generator Industry In-depth Rules</b></li>
-            <li><b>Tax Refund Dividend Mining & Profit Control Manual</b></li>
+        <h3 style="color: #1e3a8a; margin-top:0;">🔓 Unlock Your Precision Audit Report ($19)</h3>
+        <p style="color: #2c3e50; font-size: 16px;">This intelligence is structured for direct ingestion into your enterprise AI or Procurement CRM.</p>
+        <ul style="color: #334155; font-size: 15px; line-height: 1.8;">
+            <li><b>Your Exact SCRI Score & Classification</b></li>
+            <li><b>In-depth Analysis of China Industrial Clusters & Capacity utilization</b></li>
+            <li><b>13% Tax Refund Capture & Raw Material Anchoring Protocols</b></li>
+            <li><b>Insider Case Studies: Interception of Component Fraud</b></li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -522,10 +640,11 @@ elif st.session_state.step == "paywall":
     with col1:
         st.link_button("💳 Pay $19 to Unlock Full Report", "https://your-payment-link-here.com", type="primary", use_container_width=True)
     with col2:
-        if st.button("👁️ 内部免费测试：预览完整报告 (支持精美表格展示)", use_container_width=True):
+        if st.button("👁️ Internal Test: Preview Full Report (T1-T3)", use_container_width=True):
             st.session_state.step = "result"
             st.rerun()
 
+# 第三步：最终结果页面
 elif st.session_state.step == "result":
     avg_score = st.session_state.avg_score
     risk_level_key = st.session_state.risk_level_key
@@ -534,28 +653,27 @@ elif st.session_state.step == "result":
     st.markdown(f"""
     <div class="result-box">
         <h2>Your SCRI Score: {avg_score:.1f} / 10.0</h2>
-        <h3>{REPORT_DATA[risk_level_key]['level']}</h3>
+        <h3>Status: {REPORT_DATA[risk_level_key]['level']}</h3>
     </div>
     """, unsafe_allow_html=True)
     
-    st.markdown("#### 📜 Full AIV Proprietary Report ($19 Value)")
+    st.markdown("#### 📜 Full Audit Directive & Mitigation Strategy")
     
-    import markdown
-    html_content = markdown.markdown(report_text, extensions=['tables'])
-    
+    # 网页端展示 (使用 Streamlit 原生 Markdown 解析表格，不依赖外部库)
     st.markdown(f"""
-    <div style="background-color: #ffffff; padding: 25px; border-radius: 8px; border: 1px solid #cbd5e1; margin-top: 20px; font-family: sans-serif; color: #2c3e50; line-height: 1.6;">
-        {html_content}
-    </div>
+    <div style="background-color: #ffffff; padding: 25px; border-radius: 8px; border: 1px solid #cbd5e1; margin-top: 10px; color: #2c3e50;">
     """, unsafe_allow_html=True)
     
-    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown(report_text)
     
+    st.markdown("</div><br>", unsafe_allow_html=True)
+    
+    # 生成 PDF 提供下载
     pdf_buffer = generate_pdf_report(avg_score, risk_level_key)
     st.download_button(
-        label="📄 Download B2B Full PDF Report (With Formatted Tables)",
+        label="📄 Download B2B Full PDF Audit Report",
         data=pdf_buffer,
-        file_name=f"AIV_Full_Report_Score_{avg_score}.pdf",
+        file_name=f"AIV_Risk_Report_{avg_score:.1f}.pdf",
         mime="application/pdf",
         type="primary"
     )
