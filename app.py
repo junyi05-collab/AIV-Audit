@@ -8,7 +8,7 @@ from reportlab.lib import colors
 from io import BytesIO
 
 # ============================================================================
-# 1. 页面配置 (重回高冷工业蓝黑主题 - Professional Industrial Noir)
+# 1. 页面配置 (纯正工业蓝黑主题 - Professional Industrial Noir)
 # ============================================================================
 st.set_page_config(page_title="AIV Supply Chain Audit", page_icon="⚖️", layout="centered")
 
@@ -35,16 +35,26 @@ st.markdown("""
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
     }
     
-    /* 修复输入框：正常的淡色输入框，黑字加粗，保证绝对清晰 */
-    div[data-baseweb="input"] input {
-        background-color: #f8f9fa !important;
-        color: #000000 !important;
+    /* ==================================================
+       核心修复：彻底焊死输入框样式，杜绝五颜六色的变化
+       ================================================== */
+    [data-baseweb="input"] {
+        background-color: #f0f2f6 !important; /* 恒定的淡色背景 */
+        border-radius: 6px !important;
+    }
+    [data-baseweb="input"] > div {
+        background-color: transparent !important;
+        border: 2px solid #00d4ff !important; /* 永远锁定为工业蓝边框，不发红不发灰 */
+        outline: none !important;
+        box-shadow: none !important;
+        transition: none !important; /* 关掉所有渐变动画 */
+    }
+    [data-baseweb="input"] input {
+        color: #000000 !important; /* 永远是纯黑字 */
         font-weight: 900 !important;
         font-size: 16px !important;
-        border: 2px solid #00d4ff !important;
-    }
-    div[data-baseweb="input"] input:focus {
-        box-shadow: 0 0 8px rgba(0, 212, 255, 0.6) !important;
+        background-color: transparent !important;
+        -webkit-text-fill-color: #000000 !important;
     }
     
     /* 警告横幅：深色渐变带电光蓝框 */
@@ -82,7 +92,7 @@ QUESTIONS = {
 }
 
 # ============================================================================
-# 3. 三大万字梯队报告文本 (一字未删，完美保留所有硬核内容与表格)
+# 3. 三大万字梯队报告文本 (完全保留原汁原味，已切除廉价数据来源)
 # ============================================================================
 
 TIER_1_TEXT = """AIV Supply Chain Truth Report: Complete Analysis of China Generator Industry In-depth Rules & Ultimate Profit Risk Control Manual
@@ -248,15 +258,7 @@ Marine Accident Handling: 24-hour Golden Rights Protection Process
 
 Conclusion
 This report is a complete exclusive Tier 1 procurement version. All data, clauses and strategies have been verified on-site and reviewed in foreign trade practice, and can be directly programmed into Python procurement system to realize automatic screening, risk control and cost accounting. Behind the overcapacity of China's generator industry is a huge bargaining space and profit dividend. As long as you master the in-depth rules and strictly abide by risk control rules, you can get the highest quality products at the lowest cost, completely avoid foreign trade risks, and achieve long-term stable profits.
-
-Data Sources
-1. 2025-2026 Generator Export Data of General Administration of Customs of China
-2. CEEIA Industry Research Report
-3. AIV On-site Verification Data of 712 Foreign Trade Factories
-4. SMM Raw Material Price Index
-5. IEEE 2026 Global Generator Academic Report
-6. CCPIT Foreign Trade Rights Protection Data
-7. Allianz, AXA Insurance Marine Risk Assessment Report"""
+"""
 
 TIER_2_TEXT = """AIV Supply Chain Truth Report: China Generator Industry In-depth Rules & Post-Payment Remediation Manual
 
@@ -409,15 +411,7 @@ Put an end to factory interception of tax refund on the grounds of "quotation in
 
 Conclusion
 This report is tailored for Tier 2 buyers, aiming at the core current situation of completed payment before inspection and controlled illusion. All data, clauses and strategies have been verified on-site and reviewed in foreign trade practice, and can be directly programmed into Python procurement system to realize automatic supply chain leak repair, risk early warning and cost accounting. Tier 2 buyers do not need to overthrow the existing cooperation system, only need to fill the risk control shortcomings and regain the initiative according to the report content, effectively resolve post-payment risks, tap industry dividends, and achieve the transformation from "passive pressure" to "active control", making China's generator supply chain truly serve their own profit and long-term development.
-
-Data Sources
-1. 2025-2026 Generator Export Data of General Administration of Customs of China
-2. CEEIA Industry Research Report
-3. AIV On-site Verification Data of 712 Foreign Trade Factories
-4. SMM Raw Material Price Index
-5. IEEE 2026 Global Generator Academic Report
-6. CCPIT Foreign Trade Rights Protection Data
-7. Allianz, AXA Insurance Marine Risk Assessment Report"""
+"""
 
 TIER_3_TEXT = """AIV Supply Chain Truth Report: China Generator Industry Tier 3 Special Risk Control & Compliance Intervention Manual
 
@@ -491,15 +485,7 @@ Discard the compromised procurement framework. Moving forward, you must implemen
 
 Conclusion
 This report is a complete Tier 3 intervention manual. All data, clauses and strategies have been verified on-site and reviewed in foreign trade practice, and can be directly programmed into Python procurement system to realize automatic screening, risk control and cost accounting. The goal now is not to argue, but to preserve the principal. Stopping meaningless communication and turning to legal and underlying data review is the most decent retreat in transnational trade. As long as you master the in-depth rules and strictly abide by risk control rules, you can completely avoid foreign trade risks, and achieve long-term stable profits.
-
-Data Sources
-1. 2025-2026 Generator Export Data of General Administration of Customs of China
-2. CEEIA Industry Research Report
-3. AIV On-site Verification Data of 712 Foreign Trade Factories
-4. SMM Raw Material Price Index
-5. IEEE 2026 Global Generator Academic Report
-6. CCPIT Foreign Trade Rights Protection Data
-7. Allianz, AXA Insurance Marine Risk Assessment Report"""
+"""
 
 REPORT_DATA = {
     1: {"level": "Level 1: SECURE (Strategic Robust)", "full_text": TIER_1_TEXT},
@@ -598,17 +584,17 @@ if st.session_state.step == "form":
     """, unsafe_allow_html=True)
 
     with st.form("aiv_audit_form"):
-        st.markdown("<h4 style='color: #1e3a8a;'>SCRI Risk Factor Assessment</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #00d4ff;'>SCRI Risk Factor Assessment</h4>", unsafe_allow_html=True)
         
         answers = []
         for key, q_data in QUESTIONS.items():
-            st.markdown(f"<h5 style='color: #1e3a8a;'>{q_data['title']}</h5>", unsafe_allow_html=True)
+            st.markdown(f"<h5 style='color: #00d4ff;'>{q_data['title']}</h5>", unsafe_allow_html=True)
             ans = st.radio("Select an option:", q_data['options'], key=key, label_visibility="collapsed")
             answers.append((ans, q_data['options'], q_data['scores']))
             st.markdown("<br>", unsafe_allow_html=True)
             
         st.markdown("---")
-        st.markdown("<h5 style='color: #1e3a8a;'>📩 Intelligence Delivery Destination</h5>", unsafe_allow_html=True)
+        st.markdown("<h5 style='color: #00d4ff;'>📩 Intelligence Delivery Destination</h5>", unsafe_allow_html=True)
         contact_info = st.text_input("Enter Business Email or WhatsApp:")
         
         submitted = st.form_submit_button("Run AI Proprietary Algorithm 🔍", use_container_width=True)
@@ -637,9 +623,9 @@ elif st.session_state.step == "paywall":
     
     st.markdown("""
     <div class="hook-box">
-        <h3 style="color: #1e3a8a; margin-top:0;">🔓 Unlock Your Precision Audit Report ($19)</h3>
-        <p style="color: #2c3e50; font-size: 16px;">This intelligence is structured for direct ingestion into your enterprise AI or Procurement CRM.</p>
-        <ul style="color: #334155; font-size: 15px; line-height: 1.8;">
+        <h3 style="color: #00d4ff; margin-top:0;">🔓 Unlock Your Precision Audit Report ($19)</h3>
+        <p style="color: #e0e0e0; font-size: 16px;">This intelligence is structured for direct ingestion into your enterprise AI or Procurement CRM.</p>
+        <ul style="color: #b0b0b0; font-size: 15px; line-height: 1.8;">
             <li><b>Your Exact SCRI Score & Classification</b></li>
             <li><b>In-depth Analysis of China Industrial Clusters & Capacity utilization</b></li>
             <li><b>13% Tax Refund Capture & Raw Material Anchoring Protocols</b></li>
@@ -665,7 +651,7 @@ elif st.session_state.step == "result":
     st.markdown(f"""
     <div class="result-box">
         <h2>Your SCRI Score: {avg_score:.1f} / 10.0</h2>
-        <h3>Status: {REPORT_DATA[risk_level_key]['level']}</h3>
+        <h3 style="color: #00d4ff !important;">Status: {REPORT_DATA[risk_level_key]['level']}</h3>
     </div>
     """, unsafe_allow_html=True)
     
@@ -673,7 +659,7 @@ elif st.session_state.step == "result":
     
     # 网页端展示 (使用 Streamlit 原生 Markdown 解析表格，不依赖外部库)
     st.markdown(f"""
-    <div style="background-color: #ffffff; padding: 25px; border-radius: 8px; border: 1px solid #cbd5e1; margin-top: 10px; color: #2c3e50;">
+    <div style="background-color: #252a33; padding: 25px; border-radius: 8px; border: 1px solid #444; margin-top: 10px; color: #e0e0e0;">
     """, unsafe_allow_html=True)
     
     st.markdown(report_text)
